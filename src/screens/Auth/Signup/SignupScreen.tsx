@@ -14,7 +14,7 @@ export default function SignupScreen({ navigation }) {
         >
             <SafeAreaView className="p-4">
                 {/* Logo */}
-                <Text className="text-left text-[30px] font-[800] text-secondary">
+                <Text className="text-left text-[30px] font-[800] text-gray500">
                     inflxr
                 </Text>
 
@@ -25,7 +25,7 @@ export default function SignupScreen({ navigation }) {
                     </Text>
                     <Text className="text-left text-[14px] text-billAddressColor mt-1">
                         Already have an account?{" "}
-                        <Text className="text-secondary font-[700]"
+                        <Text className="text-gray500 font-[700]"
                             onPress={() => navigation.navigate("Login")}
                         >Log In</Text>
                     </Text>
@@ -78,7 +78,7 @@ export default function SignupScreen({ navigation }) {
                     </View>
 
                     {/* Sign Up Button */}
-                    <TouchableOpacity onPress={() => navigation.navigate("ProfileSetup_1")} className="bg-secondary py-3 rounded-lg mt-6">
+                    <TouchableOpacity onPress={() => navigation.navigate("ProfileSetup_1")} className="bg-gray500 py-3 rounded-lg mt-6">
                         <Text className="text-white text-center font-[600] text-[16px]"
 
                         >Sign Up</Text>
@@ -99,8 +99,8 @@ export default function SignupScreen({ navigation }) {
 
                     {/* Terms & Privacy */}
                     <Text className="text-center text-[12px] text-billAddressColor mt-[auto]">
-                        <Text className="text-secondary">Terms of Use</Text> and{" "}
-                        <Text className="text-secondary">Privacy Policy</Text>
+                        <Text className="text-gray500">Terms of Use</Text> and{" "}
+                        <Text className="text-gray500">Privacy Policy</Text>
                     </Text>
 
                     {/* Footer */}

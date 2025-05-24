@@ -7,11 +7,14 @@ import {
   TextInputProps,
   Animated,
   Easing,
-  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
 import { ChevronDown } from "lucide-react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 type InputProps = {
   label: string;
@@ -23,7 +26,8 @@ type InputProps = {
   keyboardType?: TextInputProps["keyboardType"];
   editable?: boolean;
   error?: string;
-  type: "text" | "email" | "phone" | "password";
+  type: "text" | "email" | "phone" | "password" | "select" | "date";
+  options?: { label: string; value: string }[]; // for select
 };
 
 const countryCodes = [
@@ -45,9 +49,10 @@ const Input: React.FC<InputProps> = ({
   error,
   type = "text",
 }) => {
-  const inputRef = useRef<TextInput>(null);
+  // const inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const animatedLabel = useRef(new Animated.Value(value ? 1 : 0)).current;
   const animatedBorder = useRef(new Animated.Value(isFocused ? 1 : 0)).current;
@@ -74,7 +79,7 @@ const Input: React.FC<InputProps> = ({
   const labelStyle = {
     position: "absolute" as const,
     left: 14,
-    backgroundColor: "white",
+    backgroundColor: isFocused ? "#fff" : "#f8f9fa",
     paddingHorizontal: 4,
     color: "#A1A1A1",
     top: 18,
@@ -88,20 +93,35 @@ const Input: React.FC<InputProps> = ({
     paddingTop: 8,
     paddingBottom: 8,
     paddingHorizontal: 16,
-    backgroundColor: "#FFFFF",
-    borderColor: animatedBorder.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["#d1d5db", "#000"],
-    }),
+    backgroundColor: isFocused ? "#fff" : "#f8f9fa",
+    borderColor: isFocused ? "#000" : "#f8f9fa",
   };
 
   const pickerRef = useRef<RNPickerSelect>(null);
 
+  const inputRef = useRef<TextInput>(null);
+  const [isKeyboardOpened, setIsKeyboardOpened] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardDidShow", () =>
+      setIsKeyboardOpened(true)
+    );
+    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
+      setIsKeyboardOpened(false)
+    );
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
   return (
-    <TouchableWithoutFeedback
+    <Pressable
       onPress={() => {
-        if (inputRef.current && !isFocused) {
-          inputRef.current.focus();
+        if (isKeyboardOpened) {
+          Keyboard.dismiss();
+        } else {
+          inputRef.current?.focus();
         }
       }}
     >
@@ -115,7 +135,6 @@ const Input: React.FC<InputProps> = ({
                 style={{
                   width: 90,
                   marginRight: 8,
-                  display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
                 }}
@@ -140,50 +159,77 @@ const Input: React.FC<InputProps> = ({
                         color: "#000",
                         paddingVertical: 6,
                       },
-                      inputAndroid: {
-                        fontSize: 16,
-                        color: "#000",
-                      },
-                      iconContainer: {
-                        display: "none",
-                      },
+                      inputAndroid: { fontSize: 16, color: "#000" },
+                      iconContainer: { display: "none" },
                     }}
-                    Icon={() => null} // hide default icon
+                    Icon={() => null}
                   />
                   <ChevronDown size={20} color="#111" />
                 </Pressable>
               </View>
             )}
 
-            <TextInput
-              className="flex-1 text-black dark:text-white text-[18px]"
-              value={value}
-              onChangeText={onChangeText}
-              secureTextEntry={secureTextEntry}
-              keyboardType={keyboardType}
-              editable={editable}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholderTextColor="#aaa"
-              ref={inputRef}
-            />
-
-            {hasClear && value.length > 0 && onClear && (
-              <Pressable
-                onPress={onClear}
-                hitSlop={10}
-                android_ripple={{ color: "#e5e7eb", borderless: true }}
-                className="ml-2"
-              >
-                <Ionicons name="close-circle" size={20} color="#A1A1A1" />
-              </Pressable>
+            {type === "date" ? (
+              <>
+                <Pressable
+                  className="flex-1"
+                  onPress={() => editable && setShowDatePicker(true)}
+                >
+                  <Text className="text-black text-[18px]">
+                    {value
+                      ? new Date(value).toLocaleDateString()
+                      : "Select date"}
+                  </Text>
+                </Pressable>
+                {showDatePicker && (
+                  <DateTimePicker
+                    value={value ? new Date(value) : new Date()}
+                    mode="date"
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
+                    onChange={(event, selectedDate) => {
+                      setShowDatePicker(false);
+                      if (selectedDate) {
+                        onChangeText(selectedDate.toISOString());
+                      }
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <TextInput
+                className="flex-1 text-black dark:text-white text-[18px]"
+                value={value}
+                onChangeText={onChangeText}
+                secureTextEntry={secureTextEntry}
+                keyboardType={keyboardType}
+                editable={editable}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholderTextColor="#aaa"
+                ref={inputRef}
+              />
             )}
+
+            {hasClear &&
+              value.length > 0 &&
+              onClear &&
+              type !== "select" &&
+              type !== "date" && (
+                <Pressable
+                  onPress={onClear}
+                  hitSlop={10}
+                  android_ripple={{ color: "#e5e7eb", borderless: true }}
+                  className="ml-2"
+                >
+                  <Ionicons name="close-circle" size={20} color="#A1A1A1" />
+                </Pressable>
+              )}
           </View>
         </Animated.View>
 
         {error && <Text className="text-sm text-red-500 mt-1">{error}</Text>}
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 };
 

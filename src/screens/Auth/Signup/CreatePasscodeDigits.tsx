@@ -48,7 +48,7 @@ export default function CreatePasscodeDigits() {
       {
         text: "OK",
         onPress: () => {
-          // setShowSuccess(true);
+          navigation.navigate("Home" as never);
         },
       },
     ]);

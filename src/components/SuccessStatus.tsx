@@ -87,7 +87,7 @@ const SuccessStatus: React.FC<Props> = ({
           </Text>
 
           {description && (
-            <Text className="text-base text-center text-secondary mt-4 px-4 mb-4">
+            <Text className="text-base text-center text-gray500 mt-4 px-4 mb-4">
               {description}
             </Text>
           )}

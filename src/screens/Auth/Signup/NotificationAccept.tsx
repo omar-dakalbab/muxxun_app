@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import SuccessStatus from "@/components/SuccessStatus";
 
-export default function NotificationAccept() {
+export default function NotificationAccept({ navigation }: any) {
   const [showSuccess, setShowSuccess] = React.useState(true);
 
   return (
@@ -37,7 +37,9 @@ export default function NotificationAccept() {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
               className="w-full py-4 rounded-full z-10 mt-4"
             >
               <Text className="text-black text-center text-base font-medium">
