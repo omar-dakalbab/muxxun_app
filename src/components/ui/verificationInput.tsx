@@ -57,8 +57,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
       flexDirection: "row",
       justifyContent: "space-between",
       gap: GAP,
-      // marginHorizontal: 20,
-      marginVertical: 10,
     },
     inputBox: {
       height: 80,
@@ -99,6 +97,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
             onBlur={() => setFocusedIndex(null)}
             autoFocus={index === 0}
             editable={!disableKeyboard}
+            secureTextEntry={true}
           />
         ))}
     </View>

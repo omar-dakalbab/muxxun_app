@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/input";
+import Input from "@/components/ui/Input";
 
 export default function SumsubApplicant({ navigation }) {
   const [formData, setFormData] = useState({

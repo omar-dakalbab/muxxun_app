@@ -8,30 +8,42 @@ import {
   View,
 } from "react-native";
 
+import { useNavigation, useRoute } from "@react-navigation/native";
+
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
-import BottomSheetController from "@/components/bottom-sheet";
-import Input from "@/components/ui/input";
+import BottomSheetController from "@/components/BottomSheet";
+import Input from "@/components/ui/Input";
 import PhoneInput from "react-native-phone-number-input";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function CreatePasscode() {
   const navigation = useNavigation();
-  const phoneInputRef = useRef<PhoneInput>(null);
-  const bottomSheetRef = useRef(null);
-  const [sheetContent, setSheetContent] = useState(null);
-  const [dob, setDob] = useState("");
-  const isPhoneNumberValid = dob && dob.length >= 5;
   const route = useRoute();
 
-  
+  const phoneInputRef = useRef<PhoneInput>(null);
+  const bottomSheetRef = useRef(null);
+
+  const [sheetContent, setSheetContent] = useState(null);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const isPasswordValid = password.length >= 5;
+  const isMatch = password === confirmPassword;
+  const canContinue = isPasswordValid && isMatch;
+
+  const handleContinue = () => {
+    Keyboard.dismiss();
+    navigation.navigate("CreatePasscodeDigits", {
+      phoneNumber: route?.params?.dob ?? "", // Fallback if `dob` is undefined
+    });
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} // Adjust as needed
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -43,14 +55,9 @@ export default function CreatePasscode() {
             footer={
               <Button
                 label="Continue"
-                onPress={() => {
-                  Keyboard.dismiss();
-                  navigation.navigate("CreatePasscodeDigits", {
-                    phoneNumber: dob,
-                  });
-                }}
-                disabled={!isPhoneNumberValid}
-                variant={isPhoneNumberValid ? "default" : "secondary"}
+                onPress={handleContinue}
+                disabled={!canContinue}
+                variant={canContinue ? "default" : "secondary"}
                 size="lg"
               />
             }
@@ -61,19 +68,19 @@ export default function CreatePasscode() {
             >
               <Input
                 label="Password"
-                value={dob}
-                onChangeText={setDob}
+                value={password}
+                onChangeText={setPassword}
+                onClear={() => setPassword("")}
                 keyboardType="default"
-                onClear={() => setDob("")}
                 type="password"
               />
 
               <Input
                 label="Confirm Password"
-                value={dob}
-                onChangeText={setDob}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                onClear={() => setConfirmPassword("")}
                 keyboardType="default"
-                onClear={() => setDob("")}
                 type="password"
               />
             </ScrollView>

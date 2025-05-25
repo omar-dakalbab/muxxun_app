@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import PageLayout from "@/components/layout";
-import Input from "@/components/ui/input";
+import Input from "@/components/ui/Input";
 import ContButton from "@/components/ContButton";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Select from "@/components/ui/select";
+import Select from "@/components/ui/Select";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
+import SelectModal from "@/components/ui/SelectModal";
 
 export default function PersInfo() {
   const [state, setState] = useState({
@@ -66,10 +67,10 @@ export default function PersInfo() {
             "date"
           )}
         </View>
-
-        <Select
-          label="Nationality"
+        <SelectModal
+          subTitle="Nationality"
           value={state.nationality}
+          onChange={(value) => setState({ ...state, nationality: value })}
           options={[
             { label: "Turkey", value: "TR" },
             { label: "United States", value: "US" },
@@ -77,12 +78,6 @@ export default function PersInfo() {
             { label: "France", value: "FR" },
             { label: "United Kingdom", value: "UK" },
           ]}
-          onChange={(value) => {
-            setState({
-              ...state,
-              nationality: value,
-            });
-          }}
         />
       </PageLayout>
     </View>

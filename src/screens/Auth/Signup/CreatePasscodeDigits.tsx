@@ -14,9 +14,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
-import BottomSheetController from "@/components/bottom-sheet";
-import VerificationCodeInput from "@/components/ui/verificationInput";
-import NumericPad from "@/components/ui/numericPad";
+import BottomSheetController from "@/components/BottomSheet";
+import VerificationCodeInput from "@/components/ui/VerificationInput";
+import NumericPad from "@/components/ui/NumericPad";
 import SuccessStatus from "@/components/SuccessStatus";
 
 export default function CreatePasscodeDigits() {

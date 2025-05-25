@@ -26,14 +26,20 @@ export default function SelectModal({
     { label: "Other", value: "other" },
   ],
   placeholder = "Select an option",
+  subTitle = "",
+  value,
+  onChange,
 }: {
   onPress?: () => void;
   title?: string;
   options?: { label: string; value: string }[];
   placeholder?: string;
+  subTitle?: string;
+  value?: string;
+  onChange?: (value: any) => void;
 }) {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<any>(value || "");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredOptions = options.filter((option) =>
@@ -42,17 +48,24 @@ export default function SelectModal({
 
   const handleOptionSelect = (value: string) => {
     if (selectedOption === value) {
-      setSelectedOption(null); // Deselect if already selected
+      setSelectedOption(null);
+      onChange?.(""); // Notify parent component of deselection
     } else {
-      setSelectedOption(value); // Select the new option
+      setSelectedOption(value);
+      onChange?.(value); // Notify parent component of selection
     }
-    // setOpenModal(false);
-    // onPress?.();
+
+    setOpenModal(false); // Close the modal after selection
   };
 
   return (
     <View className="bg-gray100 p-5 rounded-xl flex items-center flex-row justify-between mb-4 w-full">
-      <Text className="text-h5 text-black font-semibold">{title}</Text>
+      <View className="gap-1 w-4/5">
+        {subTitle && <Text className="text-gray700">{subTitle}</Text>}
+        <Text className="text-h5 text-black font-semibold">
+          {selectedOption}
+        </Text>
+      </View>
       <Pressable
         className="h-10 w-10 bg-white rounded-lg items-center justify-center shadow-sm"
         onPress={() => setOpenModal(true)}
@@ -86,9 +99,7 @@ export default function SelectModal({
                 onPress={() => setOpenModal(false)}
                 className="p-2 rounded-full"
               >
-                <Text className="text-base text-blue-600">
-                  <ArrowLeft />
-                </Text>
+                <ArrowLeft />
               </Pressable>
               <Text className="text-lg font-semibold">{title}</Text>
               <View className="w-12" /> {/* Placeholder for spacing */}
@@ -115,7 +126,7 @@ export default function SelectModal({
                   onPress={() => handleOptionSelect(item.value)}
                 >
                   <View className="flex flex-row items-center justify-between">
-                    <View className="flex flex-row items-center gap-5">
+                    <View className="flex flex-row items-center gap-5 w-4/5">
                       <View className="w-2 h-1 bg-black" />
                       <Text className="text-h5 font-semibold">
                         {item.label}

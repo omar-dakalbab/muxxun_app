@@ -73,6 +73,10 @@ export default function CameraScreen({ navigation }) {
       );
 
       navigation.navigate("DocumentPreviewScreen", { photoUri: cropped.uri });
+
+      if (cameraRef.current) {
+        cameraRef.current.pausePreview();
+      }
     }
   }
 

@@ -1,15 +1,13 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
-import { StatusBar } from "expo-status-bar";
 
 import ContButton from "@/components/ContButton";
-import TaskInput from "@/components/taskInput";
 import Layout from "@/components/layout";
 import SelectModal from "@/components/ui/SelectModal";
 import { ScrollView } from "react-native-gesture-handler";
 import HeaderNavigation from "@/components/HeaderNavigations";
 
-export default function OperationActivity({ navigation }) {
+export default function OperationActivity({ navigation }: { navigation: any }) {
   const activityData = [
     {
       id: 0,
@@ -108,6 +106,7 @@ export default function OperationActivity({ navigation }) {
             <SelectModal
               key={item.id}
               title={item.title}
+              subTitle={item.title}
               options={item.options}
               placeholder={item.placeholder}
             />

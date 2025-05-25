@@ -14,7 +14,7 @@ const documents = [
   { title: "Annex 1 (version 5)" },
 ];
 
-export default function SignApplications() {
+export default function SignApplications({ navigation }: any) {
   const renderDocumentItem = (title: string, index: number) => (
     <View
       key={index}
@@ -38,7 +38,7 @@ export default function SignApplications() {
         footer={
           <ContButton
             title="I agree"
-            onPress={() => console.log("Submit")}
+            onPress={() => navigation.navigate("SendSmsScreen")}
             className="w-full"
           />
         }

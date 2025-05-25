@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import BottomSheetController from "@/components/bottom-sheet";
+import BottomSheetController from "@/components/BottomSheet";
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";

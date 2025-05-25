@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import ContButton from '@/components/ContButton';
 import Layout from '@/components/layout';
 import HeaderNavigation from '@/components/HeaderNavigations';
-import ToggleInput from '@/components/toggleInput';
+import ToggleInput from '@/components/ToggleInput';
 
 const serviceOptions = [
     { title: 'Experience', description: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx' },

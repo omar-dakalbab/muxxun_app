@@ -79,7 +79,7 @@ const Input: React.FC<InputProps> = ({
   const labelStyle = {
     position: "absolute" as const,
     left: 14,
-    backgroundColor: isFocused ? "#fff" : "#f8f9fa",
+    backgroundColor: isFocused ? "#fff" : "#F5F5F5",
     paddingHorizontal: 4,
     color: "#A1A1A1",
     top: 18,
@@ -93,8 +93,8 @@ const Input: React.FC<InputProps> = ({
     paddingTop: 8,
     paddingBottom: 8,
     paddingHorizontal: 16,
-    backgroundColor: isFocused ? "#fff" : "#f8f9fa",
-    borderColor: isFocused ? "#000" : "#f8f9fa",
+    backgroundColor: isFocused ? "#fff" : "#F5F5F5",
+    borderColor: isFocused ? "#000" : "#F5F5F5",
   };
 
   const pickerRef = useRef<RNPickerSelect>(null);

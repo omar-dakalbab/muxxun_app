@@ -16,8 +16,8 @@ import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
 import BottomSheetController, {
   BottomSheetControllerRef,
-} from "@/components/bottom-sheet";
-import Input from "@/components/ui/input";
+} from "@/components/BottomSheet";
+import Input from "@/components/ui/Input";
 import formatPhoneNumber from "@/utils/formatNumber";
 
 // Define your stack param list for navigation

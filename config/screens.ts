@@ -15,20 +15,22 @@ import Activites from "@/screens/Personal/Activites";
 import OperationActivity from "@/screens/Personal/OperationActivity";
 import Reviews from "@/screens/Personal/Reviews";
 import CameraAccess from "@/screens/Personal/CameraAccess";
-import PersData from "@/screens/Business/PersData";
+import PersonelData from "@/screens/Business/PersonelData";
 import CameraScreen from "@/screens/Personal/CameraScreen";
 import DocumentPreviewScreen from "@/screens/Personal/DocumentPreviewScreen";
 import BackDocumentPreviewScreen from "@/screens/Personal/BackDocumentPreviewScreen";
 import BackCameraScreen from "@/screens/Personal/BackCameraScreen";
-import Business1 from "@/screens/Business/business1";
-import CountryAndnm from "@/screens/Business/CountryAndnm";
+import BusinessVerifyIdentify from "@/screens/Business/BusinessVerifyIdentify";
+import CountryAndName from "@/screens/Business/CountryAndName";
 import Address from "@/screens/Business/Address";
-import CorporateInfo from "@/screens/Business/CorporateInfo";
+import CorporateInformation from "@/screens/Business/CorporateInformation";
 import Services from "@/screens/Personal/Services";
 import IdentityVerification from "@/screens/Personal/IdentityVerification";
 import SumsubApplicant from "@/screens/Personal/SumsubApplicant";
 import IdentityDocument from "@/screens/Personal/IdentityDocument";
 import SignApplications from "@/screens/Personal/SignApplications";
+import SendSmsScreen from "@/screens/Auth/SendSmsScreen";
+import { CompanyType } from "@/screens/Business/CompanyType";
 
 export const screens = [
     { name: "Onboarding", component: OnboardingScreen },
@@ -42,7 +44,6 @@ export const screens = [
     { name: "NotificationAccept", component: NotificationAccept },
     { name: "Home", component: Home },
 
-
     { name: "AccountSetup", component: AccountSetup },
     { name: "VerifyIdentify", component: VerifyIdentify },
     { name: "persInfo", component: persInfo },
@@ -50,21 +51,24 @@ export const screens = [
     { name: "OperationActivity", component: OperationActivity },
     { name: "Reviews", component: Reviews },
     { name: "CameraAccess", component: CameraAccess },
-    { name: "PersData", component: PersData },
+    { name: "PersonelData", component: PersonelData },
     { name: "CameraScreen", component: CameraScreen },
     { name: "DocumentPreviewScreen", component: DocumentPreviewScreen },
     { name: "BackDocumentPreviewScreen", component: BackDocumentPreviewScreen },
     { name: "BackCameraScreen", component: BackCameraScreen },
-    { name: "Business1", component: Business1 },
-    { name: "CountryAndnm", component: CountryAndnm },
+
+    { name: "BusinessVerifyIdentify", component: BusinessVerifyIdentify },
+    { name: "CountryAndName", component: CountryAndName },
     { name: "Address", component: Address },
-    { name: "CorporateInfo", component: CorporateInfo },
+    { name: "CorporateInformation", component: CorporateInformation },
     { name: "Services", component: Services },
     { name: "IdentityVerification", component: IdentityVerification },
     { name: "SumsubApplicant", component: SumsubApplicant },
     { name: "IdentityDocument", component: IdentityDocument },
+    { name: "CompanyType", component: CompanyType }, // Assuming this is a duplicate or placeholder
 
-    { name: "SignApplications", component: SignApplications }
+    { name: "SignApplications", component: SignApplications },
+    { name: "SendSmsScreen", component: SendSmsScreen }
 
 ];
 

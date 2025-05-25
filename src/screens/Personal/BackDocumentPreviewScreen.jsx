@@ -7,9 +7,7 @@ export default function BackDocumentPreviewScreen({ route, navigation }) {
     return (
         <View className="flex-1 bg-black">
             <SafeAreaView className='justify-center flex-1'>
-                <View className='
-            
-            '>
+                <View>
                     {/* Title */}
                     <View className='items-center mt-24'>
                         <View className='items-center'>
@@ -40,23 +38,12 @@ export default function BackDocumentPreviewScreen({ route, navigation }) {
                     <View className="w-fit mx-4">
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Reviews', { photoUri })}
-
                             className="bg-white w-full h-20 rounded-xl items-center justify-center mb-2"
                         >
                             <Text className="text-black font-semibold text-lg font-inter-bold">
                                 Use this picture
                             </Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                        onPress={() => navigation.navigate('Reviews', { photoUri })}
-
-                        className="bg-white w-full h-20 rounded-xl items-center justify-center mb-2"
-                    >
-                        <Text className="text-black font-semibold text-lg font-inter-bold">
-                            Reviews Test
-                        </Text>
-                    </TouchableOpacity> */}
-
                         <TouchableOpacity
                             onPress={() => navigation.goBack()}
                             className="bg-black w-full h-20 rounded-xl items-center justify-center"

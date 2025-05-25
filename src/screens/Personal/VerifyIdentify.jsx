@@ -5,6 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import AccountCard from '@/components/ui/AccountCard';
 import { ScrollView } from 'react-native-gesture-handler';
+import Layout from '@/components/layout';
+import HeaderNavigation from '@/components/HeaderNavigations';
+import ScreenHeader from '@/components/ui/ScreenHeader';
 
 type Nav = {
     navigation: {
@@ -25,19 +28,10 @@ const verificationOptions = [
     },
 ];
 
-const Header = () => (
-    <View className="mt-5 mx-5">
-        <Text className="text-black font-inter-bold mb-3 text-h2 font-bold w-full">
-            Verify your identity
-        </Text>
-        <Text className="text-body text-gray700 w-full font-inter">
-            We need to check that you are who you say you are. Here's how you can do it.
-        </Text>
-    </View>
-);
+
 
 const SectionTitle = ({ title }: { title: string }) => (
-    <View className="mx-5 mt-5">
+    <View className='mt-4'>
         <Text className="font-inter-bold text-h5 font-semibold">{title}</Text>
     </View>
 );
@@ -54,29 +48,34 @@ const SkipButton = ({ navigation }) => (
 
 export default function VerifyIdentify({ navigation }: Nav) {
     return (
-        <SafeAreaView className="bg-white flex-1">
+        <View className="bg-white flex-1">
+            <HeaderNavigation />
+            <Layout>
+                <ScreenHeader
+                    title="Verify your identity"
+                    description="We need to check that you are who you say you are. Here's how you can do it."
+                />
+                <SectionTitle title="Method of verification" />
 
-            <Header />
-            <SectionTitle title="Method of verification" />
+                <ScrollView
+                    className="flex-1 mt-2"
+                    showsVerticalScrollIndicator={false}
+                >
+                    {verificationOptions.map(({ title, screen, icon, description }, index) => (
+                        <AccountCard
+                            key={index}
+                            title={title}
+                            icon={icon}
+                            onClick={() => {
+                                navigation.navigate(screen)
+                            }}
+                            description={description}
+                        />
+                    ))}
+                </ScrollView>
 
-            <ScrollView
-                className="flex-1 mt-2"
-                showsVerticalScrollIndicator={false}
-            >
-                {verificationOptions.map(({ title, screen, icon, description }, index) => (
-                    <AccountCard
-                        key={index}
-                        title={title}
-                        icon={icon}
-                        onClick={() => {
-                            navigation.navigate(screen)
-                        }}
-                        description={description}
-                    />
-                ))}
-            </ScrollView>
-
-            <SkipButton navigation={navigation} />
-        </SafeAreaView>
+                <SkipButton navigation={navigation} />
+            </Layout>
+        </View>
     );
 }

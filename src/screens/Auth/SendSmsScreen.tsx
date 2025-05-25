@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
 import {
+  Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   Text,
   TouchableWithoutFeedback,
@@ -15,8 +17,14 @@ import { Button } from "@/components/ui/Button";
 import BottomSheetController from "@/components/BottomSheet";
 import VerificationCodeInput from "@/components/ui/VerificationInput";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  File,
+  FileText,
+  MessageCircle,
+  MessagesSquare,
+} from "lucide-react-native";
 
-export default function PhoneNumberVerifyCode() {
+export default function SendSmsScreen() {
   const bottomSheetRef = useRef(null);
   const [sheetContent, setSheetContent] = useState(null);
 
@@ -48,8 +56,14 @@ export default function PhoneNumberVerifyCode() {
           <HeaderNavigation title="" />
 
           <PageLayout
-            title="Verify you phone number"
-            description={"We will send you a verification code to this number."}
+            title="Enter code from SMS"
+            description={
+              <Text>
+                We sent the code via SMS to{" "}
+                <Text className="font-bold">+2250708070605</Text>. Enter it
+                below to sign the application
+              </Text>
+            }
             footer={
               <Button
                 label="Continue"
@@ -95,20 +109,25 @@ export default function PhoneNumberVerifyCode() {
                 style={{
                   fontSize: 16,
                   color: "#A1A1A1",
-                  marginTop: 32,
+                  margin: 20,
                   textAlign: "center",
                 }}
               >
-                Didn’t get the code?{" "}
-                <Text
-                  style={{
-                    color: "#000",
-                    fontWeight: "600",
-                  }}
-                >
-                  Resend it
-                </Text>
+                Resend code to:
               </Text>
+
+              <SendOptions
+                title="SMS"
+                onPress={() => {
+                  console.log("Pressed SMS");
+                }}
+              />
+              <SendOptions
+                title="Whatsapp"
+                onPress={() => {
+                  console.log("Pressed Whatsapp");
+                }}
+              />
             </ScrollView>
 
             <BottomSheetController
@@ -125,3 +144,18 @@ export default function PhoneNumberVerifyCode() {
     </KeyboardAvoidingView>
   );
 }
+
+const SendOptions = ({ title, onPress }: any) => (
+  <View className="bg-gray100 w-2/3 mt-4 rounded-3xl flex-row items-center justify-between px-6 py-3">
+    <View className="flex flex-row items-center">
+      <FileText />
+      <Text className="text-h5 font-bold ml-3">{title}</Text>
+    </View>
+    <Pressable
+      onPress={onPress}
+      className="h-12 w-12 bg-white rounded-lg items-center justify-center border border-gray400 shadow-sm"
+    >
+      <MessagesSquare />
+    </Pressable>
+  </View>
+);
