@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import person from "@/assets/personImage.png";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import React from "react";
 
@@ -26,7 +26,7 @@ export default function Home({ navigation }: any) {
   };
 
   const handleContinue = () => navigation.navigate("AccountSetup");
-
+  const HEIGHT = Dimensions.get("window").height;
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar style="auto" />
@@ -38,7 +38,25 @@ export default function Home({ navigation }: any) {
       >
         {/* Image */}
         <View className="items-center mt-4">
-          <Image source={person} className="w-full h-64 resize-contain" />
+          <ImageBackground
+            source={require("@/assets/success-bg.png")} // your background image here
+            style={{
+              width: "100%",
+              height: HEIGHT * 0.4, // Adjust height as needed
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            resizeMode="cover"
+          >
+            {/* <Image
+                  source={image} // your foreground image
+                  style={{
+                    width: "80%", // slightly smaller so background is visible
+                    height: "80%",
+                  }}
+                  resizeMode="contain"
+                /> */}
+          </ImageBackground>
         </View>
 
         <View className="px-6 mt-auto">

@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import PageLayout from "@/components/layout";
 import Input from "@/components/ui/Input";
-import ContButton from "@/components/ContButton";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Select from "@/components/ui/Select";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
 import SelectModal from "@/components/ui/SelectModal";
 
-export default function PersInfo() {
+export default function PersInfo({ navigation }: any) {
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -47,7 +43,19 @@ export default function PersInfo() {
   return (
     <View className="bg-white flex-1">
       <HeaderNavigation title="" />
-      <PageLayout footer={<Button label="Continue" size="lg" />}>
+      <PageLayout
+        footer={
+          <Button
+            label="Continue"
+            size="lg"
+            onPress={() => {
+              // Handle continue action here
+              console.log("Continue pressed", state);
+              navigation.goBack(); // Navigate back or to the next screen
+            }}
+          />
+        }
+      >
         {/* Header */}
         <View className="mb-3">
           <Text className="text-black font-inter-bold mb-3 text-h2 font-bold w-full">

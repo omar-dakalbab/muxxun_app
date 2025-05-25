@@ -1,13 +1,11 @@
-import { Text, View, Pressable, ImageSourcePropType } from 'react-native';
+import { Text, View, Pressable } from 'react-native';
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import AccountCard from '@/components/ui/AccountCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import Layout from '@/components/layout';
 import HeaderNavigation from '@/components/HeaderNavigations';
 import ScreenHeader from '@/components/ui/ScreenHeader';
+import { useSelectModal } from '@/store/useSelectModal';
 
 type Nav = {
     navigation: {
@@ -47,6 +45,7 @@ const SkipButton = ({ navigation }) => (
 );
 
 export default function VerifyIdentify({ navigation }: Nav) {
+    const { selections, setSelection } = useSelectModal();
     return (
         <View className="bg-white flex-1">
             <HeaderNavigation />
@@ -70,6 +69,7 @@ export default function VerifyIdentify({ navigation }: Nav) {
                                 navigation.navigate(screen)
                             }}
                             description={description}
+                        // isCardActive={selections.includes(title)}
                         />
                     ))}
                 </ScrollView>

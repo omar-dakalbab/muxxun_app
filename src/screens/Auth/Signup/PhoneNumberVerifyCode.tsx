@@ -49,7 +49,7 @@ export default function PhoneNumberVerifyCode() {
 
           <PageLayout
             title="Verify you phone number"
-            description={"We will send you a verification code to this number."}
+            // description={"Please enter the code we sent to"}
             footer={
               <Button
                 label="Continue"
@@ -76,11 +76,17 @@ export default function PhoneNumberVerifyCode() {
               contentContainerStyle={{ flexGrow: 1 }}
               keyboardShouldPersistTaps="handled"
             >
+              <View className="mb-2">
+                <Text className="text-body text-gray500">
+                  Please enter the code we sent to
+                </Text>
+              </View>
+
               <Text
                 style={{
                   fontSize: 16,
                   color: "#000",
-                  marginBottom: 8,
+                  marginBottom: 20,
                 }}
               >
                 {userPhoneNumber}
