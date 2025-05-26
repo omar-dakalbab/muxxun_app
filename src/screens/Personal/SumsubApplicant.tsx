@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import Input from "@/components/ui/input";
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 
 export default function SumsubApplicant({ navigation }) {
   const [formData, setFormData] = useState({

@@ -11,8 +11,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { useNavigation } from "@react-navigation/native";
 import { Button } from "@/components/ui/Button";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 
@@ -338,7 +338,10 @@ export default function WelcomeScreen() {
         </View>
         <View className="absolute inset-x-5 bottom-[50px]">
           <Button
-            onPress={() => navigation.navigate("PhoneNumber_1")}
+            onPress={() => {
+              console.log('Create account')
+              navigation.navigate("PhoneNumber_1")
+            }}
             className={`w-full ${slides[activeIndex].buttonTextColor} ${slides[activeIndex].buttonBackgroundColor}`}
             size="lg"
             label="Create Account"

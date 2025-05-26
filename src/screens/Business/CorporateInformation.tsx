@@ -1,10 +1,10 @@
-import React from "react";
-import { View, ScrollView, Text } from "react-native";
+import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
 import ScreenHeader from "@/components/ui/ScreenHeader";
-import Input from "@/components/ui/Input";
-import HeaderNavigation from "@/components/HeaderNavigations";
+import Input from "@/components/ui/input";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
 
 export default function CorporateInformation({ navigation }) {
   const [state, setState] = React.useState({

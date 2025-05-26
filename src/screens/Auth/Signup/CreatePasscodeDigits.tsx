@@ -1,23 +1,23 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
+    Alert,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
-import PageLayout from "@/components/layout";
-import HeaderNavigation from "@/components/HeaderNavigations";
 import BottomSheetController from "@/components/BottomSheet";
-import VerificationCodeInput from "@/components/ui/VerificationInput";
-import NumericPad from "@/components/ui/NumericPad";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
 import SuccessStatus from "@/components/SuccessStatus";
+import NumericPad from "@/components/ui/numericPad";
+import VerificationCodeInput from "@/components/ui/verificationInput";
 
 export default function CreatePasscodeDigits() {
   const bottomSheetRef = useRef(null);

@@ -1,20 +1,20 @@
 import React, { useRef, useState } from "react";
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    TouchableWithoutFeedback,
+    View,
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import PageLayout from "@/components/layout";
-import HeaderNavigation from "@/components/HeaderNavigations";
-import { Button } from "@/components/ui/Button";
 import BottomSheetController from "@/components/BottomSheet";
-import Input from "@/components/ui/Input";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
+import { Button } from "@/components/ui/Button";
+import Input from "@/components/ui/input";
 import PhoneInput from "react-native-phone-number-input";
 
 export default function CreatePasscode() {

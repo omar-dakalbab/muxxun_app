@@ -1,13 +1,13 @@
-import React from "react";
-import { View } from "react-native";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import LoadingScreen from "@/components/LoadingScreen";
+import ToggleInput from "@/components/ToggleInput";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
 import ScreenHeader from "@/components/ui/ScreenHeader";
-import HeaderNavigation from "@/components/HeaderNavigations";
 import SelectModal from "@/components/ui/SelectModal";
-import Input from "@/components/ui/Input";
-import ToggleInput from "@/components/ToggleInput";
-import LoadingScreen from "@/components/LoadingScreen";
+import Input from "@/components/ui/input";
+import React from "react";
+import { View } from "react-native";
 
 export default function Address({
   navigation,
