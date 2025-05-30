@@ -37,14 +37,12 @@ export default function SelectModal({
   );
 
   const snapPoints = useMemo(() => ["80%"], []);
-  console.log("Snap points", snapPoints); // Should log ['80%']
-
   const openSheet = useCallback(() => {
     bottomSheetModalRef.current?.present();
 
     // scroll to top
     setTimeout(() => {
-      bottomSheetModalRef.current?.snapToIndex(1);
+      bottomSheetModalRef.current?.snapToIndex(-1);
     }, 100);
   }, []);
 

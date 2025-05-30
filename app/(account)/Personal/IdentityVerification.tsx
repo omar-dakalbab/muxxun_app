@@ -1,27 +1,34 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import ToggleInput from "@/components/ToggleInput";
 import { Button } from "@/components/ui/Button";
 import { router } from "expo-router";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
-export default function IdentityVerification({ navigation }) {
+export default function IdentityVerification() {
+  const { setIdentityVerification, identityVerification } =
+    useAccountDataStore();
+
+  const handleCountrySelect = (country: string) => {
+    setIdentityVerification({ countryOfResidence: country });
+  };
+
   return (
     <View className="flex-1 bg-white">
       <HeaderNavigation title="" />
-
       <Layout
         footer={
           <Button
             label="Continue"
             size="lg"
             onPress={() => {
-              // navigation.navigate("SumsubApplicant")
               router.push({
                 pathname: "/(account)/Business/SumsubApplicant",
               });
             }}
+            disabled={!identityVerification?.countryOfResidence}
           />
         }
       >
@@ -42,8 +49,23 @@ export default function IdentityVerification({ navigation }) {
               Select your country of residence:
             </Text>
 
-            <ToggleInput title="All country except USA" description="" />
-            <ToggleInput title="United States of America" description="" />
+            <Pressable onPress={() => handleCountrySelect("Other")}>
+              <ToggleInput
+                title="All country except USA"
+                description=""
+                value={identityVerification?.countryOfResidence === "Other"}
+                onToggle={() => handleCountrySelect("Other")}
+              />
+            </Pressable>
+
+            <Pressable onPress={() => handleCountrySelect("USA")}>
+              <ToggleInput
+                title="United States of America"
+                description=""
+                onToggle={() => handleCountrySelect("USA")}
+                value={identityVerification?.countryOfResidence === "USA"}
+              />
+            </Pressable>
 
             <View className="mt-12">
               <Text className="text-[15px] text-gray700">

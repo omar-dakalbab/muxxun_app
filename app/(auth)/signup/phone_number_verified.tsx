@@ -1,13 +1,10 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 
 export default function PhoneNumberVerified() {
-
-  const phoneNumber = useLocalSearchParams().phoneNumber
   return (
     <View className="flex-1 bg-white relative">
       <HeaderNavigation title="" />
@@ -26,7 +23,6 @@ export default function PhoneNumberVerified() {
           onPress={() => {
             router.push({
               pathname: "/(auth)/signup/create_passcode",
-              params: { phoneNumber },
             });
           }}
         />

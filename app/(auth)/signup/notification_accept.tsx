@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { X } from "lucide-react-native";
 import { router } from "expo-router";
+import * as Notifications from "expo-notifications";
 
 export default function NotificationAccept() {
   const label = "Notifications";
@@ -17,6 +18,19 @@ export default function NotificationAccept() {
   const image = require("@/assets/notification-accept.png");
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
+
+  const requestNotifications = async () => {
+    const { status } = await Notifications.requestPermissionsAsync();
+    if (status === "granted") {
+      // Alert.alert("Success", "Notifications have been enabled.");
+      router.push("/(app)");
+    } else {
+      Alert.alert(
+        "Permission Denied",
+        "Notifications permission was not granted."
+      );
+    }
+  };
 
   return (
     <View className="flex-1 bg-white px-6 pt-24 pb-10 relative">
@@ -71,26 +85,14 @@ export default function NotificationAccept() {
       <View className="w-full z-10">
         <View>
           <TouchableOpacity
-            onPress={() => {
-              //Don't Allow and Allow
-              Alert.alert("Notifications", "Notifications have been enabled.", [
-                {
-                  text: "OK",
-                  onPress: () => {
-                    router.push({
-                      pathname: "/(app)",
-                    });
-                  },
-                },
-                { text: "Cancel", style: "cancel" },
-              ]);
-            }}
+            onPress={requestNotifications}
             className="w-full bg-black py-4 rounded-full z-10"
           >
             <Text className="text-white text-center text-base font-medium">
               Allow notifications
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {
               router.push({

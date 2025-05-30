@@ -4,8 +4,11 @@ import Layout from "@/components/layout";
 import SelectModal from "@/components/ui/SelectModal";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
 export default function CompanyType() {
+  const { companyType, setCompanyType } = useAccountDataStore();
+
   const activityData = [
     {
       id: 0,
@@ -45,6 +48,8 @@ export default function CompanyType() {
             title={item.title}
             options={item.options}
             subTitle={item.subTitle}
+            value={companyType[item.id] || ""}
+            onChange={(value) => setCompanyType(item.id.toString(), value)}
           />
         ))}
       </Layout>

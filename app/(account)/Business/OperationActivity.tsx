@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 
-
 import Layout from "@/components/layout";
 import SelectModal from "@/components/ui/SelectModal";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,7 +9,7 @@ import { operationActivityData } from "@/data/OperationActivity";
 import { router } from "expo-router";
 import { Button } from "@/components/ui/Button";
 
-export default function OperationActivity({ navigation }: { navigation: any }) {
+export default function OperationActivity() {
   return (
     <View className="bg-white flex-1">
       <HeaderNavigation title="" />

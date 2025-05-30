@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import PageLayout from "@/components/layout";
 import Input from "@/components/ui/Input";
@@ -6,38 +6,36 @@ import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
 import SelectModal from "@/components/ui/SelectModal";
 import { router } from "expo-router";
+import { useAccountDataStore } from "@/store/useAccountDataStore"; // Adjust import as needed
 
 export default function PersInfo() {
-  const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    dateOfBirth: "",
-    nationality: "",
-  });
+  const { personalInformation, setField } = useAccountDataStore();
 
-  const handleChange = (field: any) => (value: any) =>
-    setState((prev) => ({ ...prev, [field]: value }));
+  const handleChange =
+    (field: keyof typeof personalInformation) => (value: string) => {
+      setField(field, value);
+    };
 
-  const handleClear = (field: any) => () =>
-    setState((prev) => ({ ...prev, [field]: "" }));
+  const handleClear = (field: keyof typeof personalInformation) => () => {
+    setField(field, "");
+  };
 
   const renderInput = (
-    field: string,
+    field: keyof typeof personalInformation,
     label: string,
     placeholder: string,
-    type: string,
-    options: object
+    type: string = "text",
+    options: any = []
   ) => (
     <Input
       label={label}
       placeholder={placeholder}
       className="mx-5 mb-3"
-      value={state[field]}
+      value={personalInformation[field]}
       onClear={handleClear(field)}
       onChangeText={handleChange(field)}
-      type={type || "text"}
-      options={options || []}
+      type={type}
+      options={options}
     />
   );
 
@@ -74,10 +72,11 @@ export default function PersInfo() {
             "date"
           )}
         </View>
+
         <SelectModal
           subTitle="Nationality"
-          value={state.nationality}
-          onChange={(value) => setState({ ...state, nationality: value })}
+          value={personalInformation.nationality}
+          onChange={(value) => setField("nationality", value)}
           options={[
             { label: "Turkey", value: "TR" },
             { label: "United States", value: "US" },

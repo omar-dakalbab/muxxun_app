@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import React from "react";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
@@ -7,9 +7,11 @@ import ToggleInput from "@/components/ToggleInput";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import SelectModal from "@/components/ui/SelectModal";
 import { router } from "expo-router";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
-export default function IdentityDocument({ navigation }: { navigation: any }) {
-  const [issueCountry, setIssueCountry] = useState("");
+export default function IdentityDocument() {
+  const { identityVerification, setIdentityVerification } =
+    useAccountDataStore();
 
   const documentTypes = [
     "Passport",
@@ -29,6 +31,10 @@ export default function IdentityDocument({ navigation }: { navigation: any }) {
     { label: "Japan", value: "japan" },
   ];
 
+  const handleDocumentTypeSelect = (type: string) => {
+    setIdentityVerification({ documentType: type });
+  };
+
   return (
     <View className="flex-1 bg-white">
       <HeaderNavigation />
@@ -39,10 +45,8 @@ export default function IdentityDocument({ navigation }: { navigation: any }) {
             label="Continue"
             size="lg"
             onPress={() => {
-              // navigation.navigate("CameraAccess")
               router.push({
                 pathname: "/(account)/Business/CameraAccess",
-                // params: { type: "identity_document" },
               });
             }}
           />
@@ -57,29 +61,34 @@ export default function IdentityDocument({ navigation }: { navigation: any }) {
               Identity document
             </Text>
             <Text className="text-[15px] text-gray700">
-              xxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxx xx
-              xxxxxxxxxx x xxxxxxx
+              Please select the country that issued your document and the type
+              of document.
             </Text>
           </View>
 
           <SelectModal
             subTitle="Select issuing country"
             title="Select issuing country"
-            value={issueCountry}
-            onChange={(e) => {
-              setIssueCountry(e);
-            }}
+            value={identityVerification?.issueCountry || ""}
+            onChange={(value) =>
+              setIdentityVerification({ issueCountry: value })
+            }
             options={countryOptions}
           />
 
-          <View className="mb-4">
+          <View className="mb-4 mt-6">
             <Text className="text-lg text-black">
               Choose your document type
             </Text>
           </View>
 
           {documentTypes.map((type) => (
-            <ToggleInput key={type} title={type} />
+            <ToggleInput
+              key={type}
+              title={type}
+              value={identityVerification?.documentType === type}
+              onToggle={() => handleDocumentTypeSelect(type)}
+            />
           ))}
 
           <View className="mt-6 space-y-2">

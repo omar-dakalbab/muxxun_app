@@ -1,23 +1,21 @@
 import React from "react";
-import { View, Text, Pressable, Image, TextInput } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import ScreenHeader from "@/components/ui/ScreenHeader";
 import HeaderNavigation from "@/components/HeaderNavigations";
-import Select from "@/components/ui/Select";
 import SelectModal from "@/components/ui/SelectModal";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
-export default function CountryAndName({ navigation }) {
-  const [state, setState] = React.useState({
-    companyName: "",
-  });
+export default function CountryAndName() {
+  const { countryAndName, setCountryAndName } = useAccountDataStore();
+
   return (
     <View className="bg-white flex-1">
       <HeaderNavigation title="" />
-      <Layout footer={<Button size="lg">Continue</Button>}>
+      <Layout footer={<Button size="lg" label="Continue" />}>
         <ScreenHeader
           title="Country and Name"
           description="xxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxx xx xxxxxxxxxx x xxxxxxx"
@@ -25,14 +23,18 @@ export default function CountryAndName({ navigation }) {
         <View className="flex justify-between flex-1 mt-6">
           <View>
             <Input
-              value={state.companyName}
-              onChangeText={(text) => setState({ ...state, companyName: text })}
+              value={countryAndName.name}
+              onChangeText={(value) =>
+                setCountryAndName({ ...countryAndName, name: value })
+              }
               label="Company Name"
               type="text"
             />
             <SelectModal
-              value={state.companyName}
-              onChange={(value) => setState({ ...state, companyName: value })}
+              value={countryAndName.country}
+              onChange={(value) =>
+                setCountryAndName({ ...countryAndName, country: value })
+              }
               subTitle="Country of incorporation of the company"
               options={[
                 { label: "Select Country", value: "" },

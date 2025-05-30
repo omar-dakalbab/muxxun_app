@@ -24,10 +24,7 @@ export default function SignApplications() {
     >
       <File className="text-black" size={24} />
       <Text className="text-gray500 font-semibold text-h5 ml-3">{title}</Text>
-      <Pressable
-        // onPress={onClick}
-        className="h-10 w-10 bg-white rounded-lg items-center justify-center shadow-sm ml-auto"
-      >
+      <Pressable className="h-10 w-10 bg-white rounded-lg items-center justify-center shadow-sm ml-auto">
         <Image source={require("@/assets/arrow.png")} className="rotate-90" />
       </Pressable>
     </View>
@@ -41,10 +38,8 @@ export default function SignApplications() {
           <Button
             label="I agree"
             onPress={() => {
-              // navigation.navigate("SendSmsScreen")
               router.push({
                 pathname: "/(account)/Business/SendSmsScreen",
-                // params: { type: "sign_applications" },
               });
             }}
             className="w-full"

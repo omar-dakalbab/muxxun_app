@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   Alert,
   Keyboard,
@@ -10,31 +10,29 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
-
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
-import BottomSheetController from "@/components/BottomSheet";
 import VerificationCodeInput from "@/components/ui/VerificationInput";
 import NumericPad from "@/components/ui/NumericPad";
 import SuccessStatus from "@/components/SuccessStatus";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useModalStore } from "@/store/useModalStore";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function CreatePasscodeDigits() {
-  const bottomSheetRef = useRef(null);
-  const params = useLocalSearchParams();
-  const [sheetContent, setSheetContent] = useState(null);
-  const [passcode, setPasscode] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showFaceID, setShowFaceID] = useState(false);
-  const isLogin = params?.isLogin || false;
+  const { isLogin, smsCode, setSmsCode } = useAuthStore();
+  const {
+    passcodeSetupModal,
+    setPasscodeSetupModal,
+    biometricAuthModal,
+    setBiometricAuthModal,
+  } = useModalStore();
 
   const handleDigitPress = (digit: string) => {
-    const newPasscode = passcode + digit;
+    const newPasscode = smsCode + digit;
     if (newPasscode.length > 4) return;
-
-    setPasscode(newPasscode);
-
+    setSmsCode(newPasscode);
     if (newPasscode.length === 4) {
       isLogin
         ? handleLoginPasscode(newPasscode)
@@ -50,12 +48,10 @@ export default function CreatePasscodeDigits() {
           if (isLogin) {
             router.push({
               pathname: "/(app)",
-              params: { isLogin },
             });
           } else {
             router.push({
               pathname: "/(account)",
-              params: { isLogin },
             });
           }
         },
@@ -71,11 +67,11 @@ export default function CreatePasscodeDigits() {
         {
           text: "Change It",
           style: "cancel",
-          onPress: () => setPasscode(""),
+          onPress: () => setSmsCode(""),
         },
         {
           text: "Continue",
-          onPress: () => setShowSuccess(true),
+          onPress: () => setPasscodeSetupModal(true),
         },
       ],
       { cancelable: true }
@@ -83,31 +79,49 @@ export default function CreatePasscodeDigits() {
   };
 
   const handleBackspace = () => {
-    setPasscode(passcode.slice(0, -1));
+    setSmsCode(smsCode.slice(0, -1));
   };
 
-  const handleFaceIDToggle = () => {
-    setShowFaceID(!showFaceID);
-    console.log("Face ID triggered");
+  const handleFaceIDToggle = async () => {
+    const hasHardware = await LocalAuthentication.hasHardwareAsync();
+    const supportedTypes =
+      await LocalAuthentication.supportedAuthenticationTypesAsync();
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+    if (!hasHardware || !isEnrolled || supportedTypes.length === 0) {
+      Alert.alert(
+        "Biometric not available",
+        "Your device does not support Face ID or fingerprint."
+      );
+      return;
+    }
+
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Authenticate to enable Face ID",
+      fallbackLabel: "Use Passcode",
+      cancelLabel: "Cancel",
+      disableDeviceFallback: false,
+    });
+
+    if (result.success) {
+      setBiometricAuthModal(true);
+    } else {
+      Alert.alert("Authentication Failed", "Could not verify your identity.");
+    }
   };
-  console.log(isLogin, "isLogin");
+
   const handleSuccessContinue = () => {
-    setShowSuccess(false);
+    setPasscodeSetupModal(false);
     if (isLogin) {
       router.push({
         pathname: "/(app)/index",
-        params: { isLogin },
       });
     } else {
       router.push({
         pathname: "/(auth)/signup/notification_accept",
-        params: { isLogin },
       });
     }
   };
-
-  console.log("create", isLogin);
-
   return (
     <KeyboardAvoidingView
       className="flex-1"
@@ -126,30 +140,19 @@ export default function CreatePasscodeDigits() {
               keyboardShouldPersistTaps="handled"
             >
               <VerificationCodeInput
-                code={passcode}
-                onChange={() => setPasscode(passcode)}
+                code={smsCode}
+                onChange={(e) => setSmsCode(e)}
                 disableKeyboard={true}
               />
             </ScrollView>
-
             <NumericPad
               onPress={handleDigitPress}
               onBackspace={handleBackspace}
               onFaceID={handleFaceIDToggle}
             />
-
-            <BottomSheetController
-              ref={bottomSheetRef}
-              content={sheetContent}
-              snapPoints={["80%", "80%"]}
-              onChange={(index) =>
-                console.log("Sheet index changed to:", index)
-              }
-            />
-
             <SuccessStatus
-              visible={showSuccess}
-              setVisible={setShowSuccess}
+              visible={passcodeSetupModal}
+              setVisible={setPasscodeSetupModal}
               label={`Your passcode has \n been set up`}
               image={require("@/assets/success-bg.png")}
               footer={
@@ -162,12 +165,11 @@ export default function CreatePasscodeDigits() {
                   </Text>
                 </TouchableOpacity>
               }
-              onExit={() => setShowSuccess(false)}
+              onExit={() => setPasscodeSetupModal(false)}
             />
-
             <SuccessStatus
-              visible={showFaceID}
-              setVisible={setShowFaceID}
+              visible={biometricAuthModal}
+              setVisible={setBiometricAuthModal}
               label={`Do you want to set up \n biometric ?`}
               description="XXXXXX"
               image={require("@/assets/success-bg.png")}
@@ -182,7 +184,7 @@ export default function CreatePasscodeDigits() {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => setShowFaceID(false)}
+                    onPress={() => setBiometricAuthModal(false)}
                     className="w-full py-4 rounded-full mt-4"
                   >
                     <Text className="text-black text-center text-base font-medium">
@@ -192,8 +194,8 @@ export default function CreatePasscodeDigits() {
                 </View>
               }
               onExit={() => {
-                setShowFaceID(false);
-                setShowSuccess(true);
+                setBiometricAuthModal(false);
+                setPasscodeSetupModal(true);
               }}
             />
           </PageLayout>

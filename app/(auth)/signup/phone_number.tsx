@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -11,25 +11,22 @@ import {
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
-import BottomSheetController, {
-  BottomSheetControllerRef,
-} from "@/components/BottomSheet";
 import Input from "@/components/ui/Input";
 import formatPhoneNumber from "@/utils/formatNumber";
 import { router } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function PhoneNumberScreen() {
-  const bottomSheetRef = useRef<BottomSheetControllerRef>(null);
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [sheetContent, setSheetContent] = useState<React.ReactNode>(null);
+  const { setPhoneNumber, phoneNumber } = useAuthStore();
   const isPhoneNumberValid = phoneNumber.length >= 5; // Add proper validation as needed
   const handleContinue = () => {
     Keyboard.dismiss();
+    setPhoneNumber(phoneNumber);
     router.push({
       pathname: "/(auth)/signup/phone_verify_code",
-      params: { phoneNumber }
     });
   };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -69,14 +66,6 @@ export default function PhoneNumberScreen() {
                 type="phone"
               />
             </ScrollView>
-            <BottomSheetController
-              ref={bottomSheetRef}
-              content={sheetContent}
-              snapPoints={["80%", "80%"]}
-              onChange={(index) =>
-                console.log("Sheet index changed to:", index)
-              }
-            />
           </PageLayout>
         </View>
       </TouchableWithoutFeedback>

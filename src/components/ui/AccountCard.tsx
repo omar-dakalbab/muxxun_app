@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 const AccountCard = ({
   icon,
@@ -15,7 +14,13 @@ const AccountCard = ({
   onClick: () => void;
   isCardActive?: boolean;
 }) => (
-  <View className="flex-row items-start bg-gray100 mt-2 p-6 rounded-2xl">
+  <View
+    className="flex-row items-start bg-gray100 mt-2 p-6 rounded-2xl"
+    style={{
+      borderWidth: isCardActive ? 1 : 0,
+      borderColor: isCardActive ? "#22C55E" : "transparent", // green-500
+    }}
+  >
     <Image className="h-5 w-5 mt-1 mr-3" source={icon} />
 
     <View className="flex-1 mr-3">

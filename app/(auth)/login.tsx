@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -11,26 +11,20 @@ import {
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
-import BottomSheetController, {
-  BottomSheetControllerRef,
-} from "@/components/BottomSheet";
 import Input from "@/components/ui/Input";
 import formatPhoneNumber from "@/utils/formatNumber";
 import { router } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function LoginScreen() {
-  const bottomSheetRef = useRef<BottomSheetControllerRef>(null);
-
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [sheetContent, setSheetContent] = useState<React.ReactNode>(null);
-
-  const isPhoneNumberValid = phoneNumber.length >= 5; // Add proper validation as needed
+  const { phoneNumber, setPhoneNumber, setIsLogin } = useAuthStore();
+  const isPhoneNumberValid = phoneNumber.length >= 5;
 
   const handleContinue = () => {
     Keyboard.dismiss();
+    setIsLogin(true);
     router.push({
       pathname: "/(auth)/signup/phone_verify_code",
-      params: { phoneNumber, isLogin: true },
     });
   };
 
@@ -43,7 +37,6 @@ export default function LoginScreen() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, backgroundColor: "white" }}>
           <HeaderNavigation title="" />
-
           <PageLayout
             title="Login"
             description="We will send you a verification code to this number."
@@ -73,15 +66,6 @@ export default function LoginScreen() {
                 type="phone"
               />
             </ScrollView>
-
-            <BottomSheetController
-              ref={bottomSheetRef}
-              content={sheetContent}
-              snapPoints={["80%", "80%"]}
-              onChange={(index) =>
-                console.log("Sheet index changed to:", index)
-              }
-            />
           </PageLayout>
         </View>
       </TouchableWithoutFeedback>

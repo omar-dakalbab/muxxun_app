@@ -6,7 +6,7 @@ import ToggleInput from "@/components/ToggleInput";
 import { Button } from "@/components/ui/Button";
 import { router } from "expo-router";
 
-export default function IdentityVerification({ navigation }) {
+export default function IdentityVerification() {
   return (
     <View className="flex-1 bg-white">
       <HeaderNavigation title="" />

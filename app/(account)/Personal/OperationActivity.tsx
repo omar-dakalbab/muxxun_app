@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 
-
 import Layout from "@/components/layout";
 import SelectModal from "@/components/ui/SelectModal";
 import { ScrollView } from "react-native-gesture-handler";
@@ -9,8 +8,10 @@ import HeaderNavigation from "@/components/HeaderNavigations";
 import { operationActivityData } from "@/data/OperationActivity";
 import { router } from "expo-router";
 import { Button } from "@/components/ui/Button";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
-export default function OperationActivity({ navigation }: { navigation: any }) {
+export default function OperationActivity() {
+  const { operationActivities, setOperationActivities } = useAccountDataStore();
   return (
     <View className="bg-white flex-1">
       <HeaderNavigation title="" />
@@ -19,11 +20,9 @@ export default function OperationActivity({ navigation }: { navigation: any }) {
           <Button
             label="Continue"
             onPress={() => {
-              // navigation.navigate("Activities")
               router.push({
                 pathname: "/(account)/Business/Activities",
               });
-
             }}
           />
         }
@@ -45,6 +44,10 @@ export default function OperationActivity({ navigation }: { navigation: any }) {
               subTitle={item.title}
               options={item.options}
               placeholder={item.placeholder}
+              value={operationActivities[item.id] || undefined}
+              onChange={(option) =>
+                setOperationActivities(item.id.toString(), option)
+              }
             />
           ))}
         </ScrollView>

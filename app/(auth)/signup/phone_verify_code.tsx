@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -8,34 +8,24 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-
 import PageLayout from "@/components/layout";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import { Button } from "@/components/ui/Button";
-import BottomSheetController from "@/components/BottomSheet";
 import VerificationCodeInput from "@/components/ui/VerificationInput";
-
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function PhoneNumberVerifyCode() {
-  const bottomSheetRef = useRef(null);
-  const [sheetContent, setSheetContent] = useState(null);
-
-  const params = useLocalSearchParams();
-  const initialPhoneNumber: string = (params.phoneNumber as string) || "";
-  const isLogin: boolean = params.isLogin === "true";
-  const [userPhoneNumber, setUserPhoneNumber] = useState(initialPhoneNumber);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [codeActive, setCodeActive] = useState(false);
+  const { isLogin, phoneNumber, passcode, setPasscode } = useAuthStore();
   const handleCodeChange = (code: string) => {
-    setPhoneNumber(code);
+    setPasscode(code);
     if (code.length === 4) {
-      setCodeActive(true);
       Keyboard.dismiss();
     }
   };
-  const isPhoneNumberValid = phoneNumber && phoneNumber.length === 4;
-  console.log("phone_verify_code", isLogin);
+
+  const isPhoneNumberValid = passcode && passcode.length === 4;
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -45,7 +35,6 @@ export default function PhoneNumberVerifyCode() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ flex: 1, backgroundColor: "white" }}>
           <HeaderNavigation title="" />
-
           <PageLayout
             title="Verify you phone number"
             footer={
@@ -55,12 +44,10 @@ export default function PhoneNumberVerifyCode() {
                   if (isLogin) {
                     router.push({
                       pathname: "/(auth)/signup/create_passcode_digits",
-                      params: { phoneNumber: userPhoneNumber, isLogin },
                     });
                   } else {
                     router.push({
                       pathname: "/(auth)/signup/phone_number_verified",
-                      params: { phoneNumber: userPhoneNumber },
                     });
                   }
                 }}
@@ -87,11 +74,11 @@ export default function PhoneNumberVerifyCode() {
                   marginBottom: 20,
                 }}
               >
-                {userPhoneNumber}
+                {phoneNumber}
               </Text>
 
               <VerificationCodeInput
-                code={phoneNumber}
+                code={passcode}
                 onChange={handleCodeChange}
               />
 
@@ -114,15 +101,6 @@ export default function PhoneNumberVerifyCode() {
                 </Text>
               </Text>
             </ScrollView>
-
-            <BottomSheetController
-              ref={bottomSheetRef}
-              content={sheetContent}
-              snapPoints={["80%", "80%"]}
-              onChange={(index) =>
-                console.log("Sheet index changed to:", index)
-              }
-            />
           </PageLayout>
         </View>
       </TouchableWithoutFeedback>

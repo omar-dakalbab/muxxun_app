@@ -10,87 +10,13 @@ import ScreenHeader from "@/components/ui/ScreenHeader";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { router } from "expo-router";
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
 type Nav = {
   navigation: {
     navigate: (screen: string) => void;
   };
 };
-
-const verificationOptions = [
-  {
-    title: "Company type",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "BusinessCompanyType",
-  },
-  {
-    title: "Country and Name",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "CountryAndName",
-  },
-  {
-    title: "Personal Data",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "PersonelData",
-  },
-  {
-    title: "Identity verification",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "IdentityVerification",
-  },
-  {
-    title: "User T&C",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "SignApplications",
-  },
-  {
-    title: "Address",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "Address",
-  },
-  {
-    title: "Corporate information",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "CorporateInformation",
-  },
-  {
-    title: "Operations activity",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "OperationActivity",
-  },
-  {
-    title: "Services",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "Services",
-  },
-  {
-    title: "COF",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "IdentityDocument",
-  },
-  {
-    title: "Add documents",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "SumsubApplicant",
-  },
-  {
-    title: "Sign",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    icon: require("@/assets/car.png"),
-    screen: "SignApplications",
-  },
-];
 
 const SectionTitle = ({ title }: { title: string }) => (
   <View className="mt-5">
@@ -114,6 +40,95 @@ const SkipButton = () => (
 );
 
 export default function BusinessVerifyIdentify({ navigation }: Nav) {
+  const {
+    companyType,
+    countryAndName,
+    personalInformation,
+    activities,
+    operationActivities,
+    services,
+    identityVerification,
+  } = useAccountDataStore();
+  const verificationOptions = [
+    {
+      title: "Company type",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "BusinessCompanyType",
+      isCardActive: Object.keys(companyType).length > 0,
+    },
+    {
+      title: "Country and Name",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "CountryAndName",
+      isCardActive: Object.keys(countryAndName).length > 0,
+    },
+    {
+      title: "Personal Data",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "PersonelData",
+      isCardActive: Object.keys(personalInformation).length > 0,
+    },
+    {
+      title: "Identity verification",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "IdentityVerification",
+      isCardActive: Object.keys(identityVerification || {}).length > 0,
+    },
+    {
+      title: "User T&C",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "SignApplications",
+    },
+    {
+      title: "Address",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "Address",
+    },
+    {
+      title: "Corporate information",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "CorporateInformation",
+    },
+    {
+      title: "Operations activity",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "OperationActivity",
+      isCardActive: Object.keys(operationActivities).length > 0,
+    },
+    {
+      title: "Services",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "Services",
+      isCardActive: Object.keys(services).length > 0,
+    },
+    {
+      title: "COF",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "IdentityDocument",
+    },
+    {
+      title: "Add documents",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "SumsubApplicant",
+    },
+    {
+      title: "Sign",
+      description: "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      icon: require("@/assets/car.png"),
+      screen: "SignApplications",
+    },
+  ];
   return (
     <View className="bg-white flex-1">
       <HeaderNavigation />

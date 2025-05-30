@@ -1,33 +1,17 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-
 import SelectModal from "@/components/ui/SelectModal";
 import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
-
 import { useSelectModal } from "@/store/useSelectModal";
 import { activityData } from "@/data/Activities";
 import { router } from "expo-router";
 import ScreenHeader from "@/components/ui/ScreenHeader";
-
-type RootStackParamList = {
-  Activities: undefined;
-  OperationActivity: undefined;
-};
-
-type ActivitiesScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Activities"
->;
+import { useAccountDataStore } from "@/store/useAccountDataStore";
 
 export default function Activities() {
-  const navigation = useNavigation<ActivitiesScreenNavigationProp>();
-  const { selections, setSelection } = useSelectModal();
-  console.log("selections", selections);
+  const { activities, setActivitiesSelection } = useAccountDataStore();
   return (
     <View className="bg-white flex-1 items-start justify-start">
       <HeaderNavigation title="" />
@@ -41,18 +25,18 @@ export default function Activities() {
             subTitle={item.title}
             options={item.options}
             placeholder={item.placeholder}
-            value={selections[item.id] || undefined}
-            onChange={(option) => setSelection("activites", item.id, option)}
+            value={activities[item.id] || undefined}
+            onChange={(option) =>
+              setActivitiesSelection(item.id.toString(), option)
+            }
           />
         ))}
 
         <Pressable
           className="h-14 mt-6 bg-[#F5F5F5] flex flex-row items-center rounded-2xl"
           onPress={() => {
-            // navigation.navigate("OperationActivity")
             router.push({
-              pathname: "/(account)/Business/OperationActivity",
-              // params: { type: "activities" },
+              pathname: "/(account)/Personal/OperationActivity",
             });
           }}
         >
