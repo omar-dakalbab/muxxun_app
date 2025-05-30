@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+      "jsx": "react",
+      "target": "es2016",
+      "module": "es2015",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "types": ["nativewind/types"],
+      "baseUrl": ".",              // required
+      "paths": {
+        "@/*": ["src/*"]           // tells TS that @ means ./src
+      }
+    },
+  "extends": "expo/tsconfig.base"
+}
