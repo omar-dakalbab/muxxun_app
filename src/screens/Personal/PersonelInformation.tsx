@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { View, Text } from "react-native";
-import PageLayout from "@/components/layout";
-import Input from "@/components/ui/Input";
 import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
+import Input from "@/components/ui/input";
 import SelectModal from "@/components/ui/SelectModal";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 
 export default function PersInfo({ navigation }: any) {
   const [state, setState] = useState({

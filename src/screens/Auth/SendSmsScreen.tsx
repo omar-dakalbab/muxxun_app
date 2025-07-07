@@ -1,27 +1,24 @@
 import React, { useRef, useState } from "react";
 import {
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  Text,
-  TouchableWithoutFeedback,
-  View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    Pressable,
+    ScrollView,
+    Text,
+    TouchableWithoutFeedback,
+    View
 } from "react-native";
 
-import PageLayout from "@/components/layout";
-import HeaderNavigation from "@/components/HeaderNavigations";
-import { Button } from "@/components/ui/Button";
 import BottomSheetController from "@/components/BottomSheet";
-import VerificationCodeInput from "@/components/ui/VerificationInput";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
+import { Button } from "@/components/ui/Button";
+import VerificationCodeInput from "@/components/ui/verificationInput";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
-  File,
-  FileText,
-  MessageCircle,
-  MessagesSquare,
+    FileText,
+    MessagesSquare
 } from "lucide-react-native";
 
 export default function SendSmsScreen() {

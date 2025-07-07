@@ -1,14 +1,11 @@
-import React from "react";
-import { View, Text, Pressable, Image, TextInput } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import ContButton from "@/components/ContButton";
+import HeaderNavigation from "@/components/HeaderNavigations";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import Input from "@/components/ui/input";
 import ScreenHeader from "@/components/ui/ScreenHeader";
-import HeaderNavigation from "@/components/HeaderNavigations";
-import Select from "@/components/ui/Select";
 import SelectModal from "@/components/ui/SelectModal";
+import React from "react";
+import { View } from "react-native";
 
 export default function CountryAndName({ navigation }) {
   const [state, setState] = React.useState({

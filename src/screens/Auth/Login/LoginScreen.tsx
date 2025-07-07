@@ -1,23 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useRef, useState } from "react";
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    TouchableWithoutFeedback,
+    View,
 } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import PhoneInput from "react-native-phone-number-input";
 
-import PageLayout from "@/components/layout";
-import HeaderNavigation from "@/components/HeaderNavigations";
-import { Button } from "@/components/ui/Button";
 import BottomSheetController, {
-  BottomSheetControllerRef,
+    BottomSheetControllerRef,
 } from "@/components/BottomSheet";
-import Input from "@/components/ui/Input";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
+import { Button } from "@/components/ui/Button";
+import Input from "@/components/ui/input";
 import formatPhoneNumber from "@/utils/formatNumber";
 
 // Define your stack param list for navigation

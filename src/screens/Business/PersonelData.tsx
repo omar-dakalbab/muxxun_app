@@ -1,12 +1,12 @@
-import React from "react";
-import { View, ScrollView, Text } from "react-native";
 import ContButton from "@/components/ContButton";
+import HeaderNavigation from "@/components/HeaderNavigations";
 import ToggleInput from "@/components/ToggleInput";
 import Layout from "@/components/layout";
-import Input from "@/components/ui/Input";
-import HeaderNavigation from "@/components/HeaderNavigations";
 import ScreenHeader from "@/components/ui/ScreenHeader";
 import SelectModal from "@/components/ui/SelectModal";
+import Input from "@/components/ui/input";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
 
 type PersonalDataProps = {
   navigation: any;

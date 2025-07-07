@@ -1,19 +1,19 @@
 import React, { useRef, useState } from "react";
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableWithoutFeedback,
-  View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from "react-native";
 
-import PageLayout from "@/components/layout";
-import HeaderNavigation from "@/components/HeaderNavigations";
-import { Button } from "@/components/ui/Button";
 import BottomSheetController from "@/components/BottomSheet";
-import VerificationCodeInput from "@/components/ui/VerificationInput";
+import HeaderNavigation from "@/components/HeaderNavigations";
+import PageLayout from "@/components/layout";
+import { Button } from "@/components/ui/Button";
+import VerificationCodeInput from "@/components/ui/verificationInput";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function PhoneNumberVerifyCode() {
