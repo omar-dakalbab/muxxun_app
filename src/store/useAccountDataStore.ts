@@ -99,7 +99,7 @@ const countryAndNameState: CountryAndName = {
     name: "",
 };
 const initialUserConditions: UserConditions = {
-    isCompletedKYC: false,
+    isCompletedKYC: true,
 };
 
 

@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import RenderIcon from "../RenderIcon";
 import RectangleIcon from "../ui/RectangleIcon";
-
+import { router } from "expo-router";
 type MenuItem = { icon: string; label: string; onPress: () => void };
 
 export default function AccountHeader() {
+
     const [menuVisible, setMenuVisible] = useState(false);
 
     const menuItems: MenuItem[] = [
@@ -53,12 +54,24 @@ export default function AccountHeader() {
 
                 {/* action buttons */}
                 <View className="flex-row items-center p-6 w-full">
-                    <ActionButton icon="topup" label="Top Up" onPress={() => { }} />
-                    <ActionButton icon="transfer" label="Transfer" onPress={() => { }} />
+                    <ActionButton icon="topup" label="Top Up" onPress={() => {
+                        router.push({
+                            pathname: "/(topup)",
+                        });
+                    }} />
+                    <ActionButton icon="transfer" label="Transfer" onPress={() => {
+                        router.push({
+                            pathname: "/(transfer)",
+                        });
+                    }} />
                     <ActionButton
                         icon="exchange"
                         label="Exchange"
-                        onPress={() => { }}
+                        onPress={() => {
+                            router.push({
+                                pathname: "/(exchange)",
+                            });
+                        }}
                         isLastItem
                     />
                 </View>
