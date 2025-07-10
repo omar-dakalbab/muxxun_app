@@ -65,8 +65,7 @@ export const screens = [
     { name: "IdentityVerification", component: IdentityVerification },
     { name: "SumsubApplicant", component: SumsubApplicant },
     { name: "IdentityDocument", component: IdentityDocument },
-    { name: "CompanyType", component: CompanyType }, // Assuming this is a duplicate or placeholder
-
+    { name: "CompanyType", component: CompanyType },
     { name: "SignApplications", component: SignApplications },
     { name: "SendSmsScreen", component: SendSmsScreen }
 

@@ -5,14 +5,20 @@ const iconMap: Record<string, any> = {
   notification: require("@/assets/icons/notification.png"),
   bank: require("@/assets/icons/bank.png"),
   search: require("@/assets/icons/search.png"),
+  user: require("@/assets/icons/user.png"),
+  dots: require("@/assets/icons/dots.png"),
+  transfer: require("@/assets/icons/transfer.png"),
+  topup: require("@/assets/icons/topup.png"),
+  exchange: require("@/assets/icons/exchange.png"),
 };
 
 interface RenderIconProps {
   icon: keyof typeof iconMap;
   style?: any;
+  size?: number;
 }
 
-export default function RenderIcon({ icon, style }: RenderIconProps) {
+export default function RenderIcon({ icon, style, size = 24 }: RenderIconProps) {
   const imageSource = iconMap[icon];
 
   if (!imageSource) {
@@ -22,7 +28,11 @@ export default function RenderIcon({ icon, style }: RenderIconProps) {
 
   return (
     <View style={[styles.container, style]}>
-      <Image source={imageSource} style={styles.image} resizeMode="contain" />
+      <Image source={imageSource} style={{
+        width: size,
+        height: size,
+        // tintColor: "black",
+      }} resizeMode="contain" />
     </View>
   );
 }
@@ -31,9 +41,5 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  image: {
-    width: 24, // w-6
-    height: 24, // h-6
   },
 });
