@@ -24,7 +24,8 @@ export default function LoginScreen() {
     Keyboard.dismiss();
     setIsLogin(true);
     router.push({
-      pathname: "/(auth)/signup/phone_verify_code",
+      // pathname: "/(auth)/signup/phone_verify_code",
+      pathname:"/(exchange)/"
     });
   };
 

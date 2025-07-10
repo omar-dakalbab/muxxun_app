@@ -17,7 +17,7 @@ export default function KYCCard() {
         <Pressable
           className="mt-8 px-6 py-3 border border-zinc-300 rounded-full flex-row items-center justify-center self-center"
           onPress={() => {
-            router.push("/(account)");
+            router.push("/(topup)");
           }}
         >
           <Plus size={16} color="black" />
