@@ -1,5 +1,9 @@
 import { create } from "zustand";
 
+interface UserConditions {
+    isCompletedKYC: boolean;
+}
+
 interface PersonalInformation {
     firstName: string;
     lastName: string;
@@ -50,7 +54,6 @@ interface CountryAndName {
     name: string;
 }
 
-
 interface AccountDataState {
     personalInformation: PersonalInformation;
     activities: ActivitiesState;
@@ -59,18 +62,17 @@ interface AccountDataState {
     identityVerification: IdentityVerification;
     companyType: CompanyType;
     countryAndName: CountryAndName;
+    userConditions?: UserConditions;
 
     setPersonalInformation: (info: Partial<PersonalInformation>) => void;
     setField: (field: keyof PersonalInformation, value: string) => void;
-
-
     setActivitiesSelection: (id: string, value: string) => void;
     setOperationActivities: (id: string, value: string) => void;
     setServicesSelection: (id: string, value: boolean) => void;
     setIdentityVerification: (info: Partial<IdentityVerification>) => void;
     setCompanyType: (id: string, value: string) => void;
     setCountryAndName: (info: Partial<CountryAndName>) => void;
-
+    setUserConditions: (conditions: Partial<UserConditions>) => void;
 
     reset: () => void;
 }
@@ -96,6 +98,9 @@ const countryAndNameState: CountryAndName = {
     country: "",
     name: "",
 };
+const initialUserConditions: UserConditions = {
+    isCompletedKYC: false,
+};
 
 
 export const useAccountDataStore = create<AccountDataState>((set) => ({
@@ -106,6 +111,7 @@ export const useAccountDataStore = create<AccountDataState>((set) => ({
     identityVerification: { ...identityVerificationState },
     companyType: { ...companyTypeState },
     countryAndName: { ...countryAndNameState },
+    userConditions: { ...initialUserConditions },
 
     setPersonalInformation: (info) =>
         set((state) => ({
@@ -168,6 +174,11 @@ export const useAccountDataStore = create<AccountDataState>((set) => ({
             countryAndName: { ...state.countryAndName, ...info },
         })),
 
+    setUserConditions: (conditions: Partial<UserConditions>) =>
+        set((state) => ({
+            userConditions: { ...state.userConditions, ...conditions } as UserConditions,
+        })),
+
     reset: () => set({
         personalInformation: { ...personalInformationState },
         activities: { ...activitiesState },
@@ -176,5 +187,6 @@ export const useAccountDataStore = create<AccountDataState>((set) => ({
         identityVerification: { ...identityVerificationState },
         companyType: { ...companyTypeState },
         countryAndName: { ...countryAndNameState },
+        userConditions: { ...initialUserConditions },
     }),
 }));

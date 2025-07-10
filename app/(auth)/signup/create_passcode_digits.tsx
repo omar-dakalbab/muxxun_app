@@ -145,11 +145,13 @@ export default function CreatePasscodeDigits() {
                 disableKeyboard={true}
               />
             </ScrollView>
+
             <NumericPad
               onPress={handleDigitPress}
               onBackspace={handleBackspace}
               onFaceID={handleFaceIDToggle}
             />
+
             <SuccessStatus
               visible={passcodeSetupModal}
               setVisible={setPasscodeSetupModal}
