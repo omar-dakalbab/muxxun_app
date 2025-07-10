@@ -24,6 +24,8 @@ export default function MainHome({ loading }: { loading?: boolean }) {
         );
     }
 
+    // test
+
     return (
         <Animated.ScrollView className="flex-1 bg-white"
             scrollEventThrottle={16}
