@@ -3,6 +3,7 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ArrowLeft } from "lucide-react-native";
 import { router } from "expo-router";
+import { X } from "lucide-react-native";
 
 type HeaderNavigationProps = {
   title?: string;
