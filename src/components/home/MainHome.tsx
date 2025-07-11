@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, ScrollView, FlatList, useWindowDimensions, Animated } from "react-native";
-import KYCCard from "@/components/home/KYCCard";
-import MuxxusCard from "@/components/home/MuxxusCard";
+import { View, FlatList, useWindowDimensions, Animated } from "react-native";
 import Skeleton from "@/components/home/Skeleton";
 import AccountHeader from "./AccountHeader";
 import DotsIndicator from "./DotsIndicator";
@@ -11,7 +9,7 @@ import Widgets from "./Widgets";
 
 export default function MainHome({ loading }: { loading?: boolean }) {
     const { width } = useWindowDimensions();
-    const cards = [<AccountHeader />, <KYCCard />, <MuxxusCard />];
+    const cards = [<AccountHeader />, <AccountHeader />, <AccountHeader />];
     const [activeCard, setActiveCard] = useState(0);
     const flatListRef = useRef<FlatList>(null);
     const scrollY = useRef(new Animated.Value(0)).current
@@ -23,9 +21,6 @@ export default function MainHome({ loading }: { loading?: boolean }) {
             </View>
         );
     }
-
-    // test
-
     return (
         <Animated.ScrollView className="flex-1 bg-white"
             scrollEventThrottle={16}
@@ -33,7 +28,6 @@ export default function MainHome({ loading }: { loading?: boolean }) {
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                 { useNativeDriver: true }
             )}>
-            {/* Horizontal cards carousel */}
             <View style={{ height: 300 }}>
                 <FlatList
                     ref={flatListRef}
@@ -52,10 +46,8 @@ export default function MainHome({ loading }: { loading?: boolean }) {
                 />
                 <DotsIndicator count={cards.length} activeIndex={activeCard} />
             </View>
-
             <TransactionsList />
             <TransferChart />
-
             <Widgets scrollY={scrollY} />
         </Animated.ScrollView>
     );
