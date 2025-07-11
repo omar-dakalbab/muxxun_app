@@ -3,7 +3,9 @@ import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop, Line, Circle } from 'react-native-svg';
 import { Calendar } from 'lucide-react-native';
 import { Button } from '../ui/Button';
-import Widgets from './Widgets';
+import CurrencyConvertInput from './CurrencyConvertInput';
+
+
 
 const { width } = Dimensions.get('window');
 const chartWidth = width - 64; // subtract outer margin (16*2) and inner padding (16*2)
@@ -104,6 +106,11 @@ export default function TransferSimulator() {
                         ${i === 0 ? 0 : i === 1 ? (max / 2).toLocaleString() : max.toLocaleString()}
                     </Text>
                 ))}
+            </View>
+
+
+            <View className='mt-8'>
+                <CurrencyConvertInput />
             </View>
 
             <View className='mt-4'>

@@ -61,7 +61,7 @@ export default function AccountHeader() {
                     }} />
                     <ActionButton icon="transfer" label="Transfer" onPress={() => {
                         router.push({
-                            pathname: "/(transactions)",
+                            pathname: "/(transactions)/sendTransaction",
                         });
                     }} />
                     <ActionButton
