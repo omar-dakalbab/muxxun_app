@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     passcode: '',
     password: '',
     confirmPassword: '',
-    isLogin: false,
+    isLogin: true,
     smsCode: '',
     signAppSmsCode: '',
 
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         passcode: '',
         password: '',
         confirmPassword: '',
-        isLogin: false,
+        isLogin: true,
         smsCode: '',
         signAppSmsCode: '',
     }),

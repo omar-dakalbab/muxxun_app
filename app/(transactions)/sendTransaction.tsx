@@ -14,12 +14,12 @@ import {
     Plus,
     Search,
     UserPlus,
-    ChevronRight,
+    File,
 } from 'lucide-react-native';
 
 import HeaderNavigation from '@/components/HeaderNavigations';
+import MainContainerCard from '@/components/ui/MainContainerCard';
 
-// Type definition for a contact
 type Contact = {
     id: string;
     name: string;
@@ -27,7 +27,6 @@ type Contact = {
     avatar: ImageSourcePropType;
 };
 
-// Sample data
 const recentContacts: Contact[] = [
     {
         id: '1',
@@ -51,8 +50,6 @@ const recentContacts: Contact[] = [
 
 const SendTransaction: React.FC = () => {
     const router = useRouter();
-
-    // Search state
     const [searchText, setSearchText] = useState<string>('');
     const filteredContacts = recentContacts.filter(
         (c) =>
@@ -63,13 +60,10 @@ const SendTransaction: React.FC = () => {
     return (
         <SafeAreaView className="flex-1 bg-white">
             <HeaderNavigation />
-
             <View className="px-6 mt-4 flex-1">
                 <Text className="text-h1 font-bold mb-4">
                     Who are you sending to ?
                 </Text>
-
-                {/* Add new recipient (shrunk to content) */}
                 <Pressable
                     onPress={() => router.push('/addRecipient')}
                     className="flex-row items-center mb-4 px-4 py-2 rounded-full border border-gray-300 self-start"
@@ -79,8 +73,6 @@ const SendTransaction: React.FC = () => {
                         Add a new recipient
                     </Text>
                 </Pressable>
-
-                {/* Search bar */}
                 <View className="flex-row items-center bg-gray100 px-4 py-2 rounded-full mb-6">
                     <Search size={16} color="#9CA3AF" />
                     <TextInput
@@ -91,8 +83,6 @@ const SendTransaction: React.FC = () => {
                         className="ml-2 flex-1 text-gray-700 text-sm"
                     />
                 </View>
-
-                {/* Recent contacts list */}
                 <Text className="text-gray700 text-footnote mb-4">
                     Recent contacts
                 </Text>
@@ -103,8 +93,8 @@ const SendTransaction: React.FC = () => {
                         renderItem={({ item, index }) => {
                             return (
                                 <Pressable
+                                    key={index}
                                     onPress={() => {
-                                        /* handle select contact */
                                         router.push({
                                             pathname: '/currencyChooser',
                                             params: { contactId: item.id },
@@ -135,46 +125,19 @@ const SendTransaction: React.FC = () => {
                 <Text className="text-gray700 text-footnote my-4">
                     Can't find who you are looking for?
                 </Text>
-                <Pressable
+                <MainContainerCard
+                    title="Invite a friend"
+                    description="To make instant payments"
+                    icon={<UserPlus size={20} color="#1F2937" />}
                     onPress={() => router.push('/invite')}
-                    className="flex-row justify-between items-center bg-gray100 border border-gray100 rounded-xl px-4 py-4 mb-3"
-                >
-                    <View className="flex-row items-center space-x-3">
-                        <UserPlus size={20} color="#1F2937" />
-                        <View>
-                            <Text className="text-base font-semibold text-gray-900">
-                                Invite a friend
-                            </Text>
-                            <Text className="text-sm text-gray-500">
-                                To make instant payments
-                            </Text>
-                        </View>
-                    </View>
-                    <View className="flex-row items-center space-x-2 bg-white rounded-xl px-3 py-3 border-gray400 border">
-                        <ChevronRight size={20} color="#6B7280" />
-                    </View>
-                </Pressable>
-
-                <Pressable
+                />
+                <MainContainerCard
+                    title="Call us"
+                    icon={<File size={20} color="#1F2937" />}
                     onPress={() => router.push('/invite')}
-                    className="flex-row justify-between items-center bg-gray100 border border-gray100 rounded-xl px-4 py-4 mb-3"
-                >
-                    <View className="flex-row items-center space-x-3">
-                        <UserPlus size={20} color="#1F2937" />
-                        <View>
-                            <Text className="text-base font-semibold text-gray-900">
-                                Call us
-                            </Text>
-                        </View>
-                    </View>
-                    <View className="flex-row items-center space-x-2 bg-white rounded-xl px-3 py-3 border-gray400 border">
-                        <ChevronRight size={20} color="#6B7280" />
-                    </View>
-                </Pressable>
-            </View >
-
-
-        </SafeAreaView >
+                />
+            </View>
+        </SafeAreaView>
     );
 };
 

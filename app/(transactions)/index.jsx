@@ -48,6 +48,7 @@ const Index = () => {
         title='Transactions'
         rightIcon={<Search />}
         onRightIconPress={() => setSearchVisible(!searchVisible)}
+        onLeftIconPress={() => router.push("(app)")}
       />
 
       {/* Search Input */}

@@ -70,7 +70,6 @@ export class CurrencyInput extends Component {
 
 
     render() {
-        console.log(selectedCurrency)
         const {
             imageSource = require("@/assets/Frame 162744.png"),
             placeholder = '0',

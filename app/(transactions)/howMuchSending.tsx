@@ -4,86 +4,152 @@ import {
     View,
     Text,
     Pressable,
-    Image,
-    TextInput,
-    FlatList,
-    ImageSourcePropType,
+    Modal,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import {
-    Plus,
-    Search,
-    UserPlus,
-    ChevronRight,
-} from 'lucide-react-native';
-
 import HeaderNavigation from '@/components/HeaderNavigations';
 import CurrencyInput from '@/components/CurrencyInput';
-
-// Type definition for a contact
-type Contact = {
-    id: string;
-    name: string;
-    phone: string;
-    avatar: ImageSourcePropType;
-};
-
-// Sample data
-const recentContacts: Contact[] = [
-    {
-        id: '1',
-        name: 'Maria Sevchenko',
-        phone: '(316) 555-0116',
-        avatar: require('@/assets/maria.png'),
-    },
-    {
-        id: '2',
-        name: 'Andrade Alexander Bade',
-        phone: '(201) 555-0124',
-        avatar: require('@/assets/andrade.png'),
-    },
-    {
-        id: '3',
-        name: 'Michelle Princess',
-        phone: '(209) 555-0104',
-        avatar: require('@/assets/michelle.png'),
-    },
-];
+import ChooseContainerCard from '@/components/ui/ChooseContainerCard';
+import { Banknote, Blinds, Clock } from 'lucide-react-native';
 
 const HowMuchSending: React.FC = () => {
     const router = useRouter();
-
-    // Search state
-    const [searchText, setSearchText] = useState<string>('');
-    const filteredContacts = recentContacts.filter(
-        (c) =>
-            c.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            c.phone.includes(searchText)
+    const [modalVisible, setModalVisible] = useState(false);
+    const transferFee = '0.058 GBP';
+    const ourFee = '10 GBP';
+    const ItemInformation = ({
+        title,
+        description,
+        icon,
+        button,
+    }: {
+        title: string;
+        description?: string;
+        icon?: React.ReactNode;
+        button?: string;
+    }) => (
+        <View className="flex-row justify-between items-center mb-4 px-2">
+            <View className="flex-row items-start space-x-3">
+                {icon}
+                <View>
+                    <Text className="text-footnote text-gray600">{title}</Text>
+                    {description && (
+                        <Text className="text-h5 font-semibold text-black mt-2">
+                            {description}
+                        </Text>
+                    )}
+                </View>
+            </View>
+            {button && (
+                <View className="flex-row items-center space-x-2 bg-white rounded-full px-4 py-3 border border-black">
+                    <Text className="text-footnote text-black font-semibold">
+                        {button}
+                    </Text>
+                </View>
+            )}
+        </View>
     );
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
-            <HeaderNavigation />
+        <>
+            <SafeAreaView className="flex-1 bg-white">
+                <HeaderNavigation />
+                <View className="px-6 mt-4 flex-1">
+                    <Text className="text-h2 font-bold mb-4">
+                        How much are you sending?
+                    </Text>
+                    <Text className="text-gray-700 text-footnote mb-4">
+                        The 100$ will arrive in Christian M.’s account in seconds
+                    </Text>
 
-            <View className="px-6 mt-4 flex-1">
-                <Text className="text-h1 font-bold mb-4">
-                    How much are you sending?
-                </Text>
-                <Text className="text-gray-700 text-footnote mb-4">
-                    You send
-                </Text>
-                <CurrencyInput caption='Balance: 500 GBP' />
-                <CurrencyInput caption='User user gets' />
-            </View>
+                    <CurrencyInput caption="Balance: 500 GBP" />
+                    <Text className="text-gray-700 text-footnote mb-4 mt-1">
+                        We will convert 199.28 GBP after fees
+                    </Text>
+                    <CurrencyInput caption="User gets" />
 
-            <Pressable
-                onPress={() => router.push('/(transactions)/searchUser')}
-                className="bg-black rounded-lg mx-4 h-16 items-center justify-center"
+                    <Text className="text-black text-h5 font-semibold mb-4 mt-3">
+                        Paying with
+                    </Text>
+                    <ChooseContainerCard
+                        icon={<Banknote className="text-black" />}
+                        title="MXXUS GBP Balance"
+                        description="You have 500 GBP"
+                        buttonText="Change"
+                        onPress={() => router.push('/(topup)/paymentOption')}
+                    />
+
+                    <ItemInformation
+                        title="Arrives"
+                        description="In seconds"
+                        icon={<Clock className="text-black" />}
+                    />
+                    <ItemInformation
+                        title="Total fees"
+                        description="Included in EUR amount"
+                        icon={<Blinds className="text-black" />}
+                        button="11.07 GBP"
+                    />
+                </View>
+
+                <Pressable
+                    onPress={() => setModalVisible(true)}
+                    className="bg-black rounded-lg mx-4 h-16 items-center justify-center"
+                >
+                    <Text className="text-base font-semibold text-white">
+                        Sell GBP
+                    </Text>
+                </Pressable>
+            </SafeAreaView>
+
+            <Modal
+                visible={modalVisible}
+                transparent
+                animationType='fade'
+                onRequestClose={() => setModalVisible(false)}
             >
-                <Text className="text-base font-semibold text-white">Sell GBP</Text>
-            </Pressable>
+                {/* dark overlay + align sheet to bottom */}
+                <View className="flex-1 justify-end" style={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }}>
+                    {/* bottom sheet container */}
+                    <View className="bg-white rounded-3xl p-6 m-4">
+                        <Text className="text-h4 font-bold mb-4">Total fees</Text>
 
-        </SafeAreaView >
+                        {/* white card holding the rows */}
+                        <View className="bg-gray-100 rounded-xl p-4 mb-6">
+                            {/* transfer fee row */}
+                            <View className="flex-row justify-between mb-8">
+                                <Text className="text-base text-gray700">Transfer fee</Text>
+                                <Text className="text-base font-semibold text-black">
+                                    {transferFee}
+                                </Text>
+                            </View>
+                            {/* our fee row */}
+                            <View className="flex-row justify-between">
+                                <Text className="text-base text-gray700">Our fee</Text>
+                                <Text className="text-base font-semibold text-black">
+                                    {ourFee}
+                                </Text>
+                            </View>
+                        </View>
+
+                        {/* Close or Confirm */}
+                        <Pressable
+                            onPress={() => {
+                                setModalVisible(false);
+                                router.push('/(transactions)/reviewTransactionDetails');
+                            }}
+                            className="bg-black py-3 rounded-lg"
+                        >
+                            <Text className="text-center text-white font-semibold">
+                                Sell GBP
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        </>
     );
 };
 
