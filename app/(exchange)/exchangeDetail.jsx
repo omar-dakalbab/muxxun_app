@@ -46,7 +46,7 @@ export default function exchangeDetail() {
 
 
 
-  const renderCard = (data: typeof applicantData) => (
+  const renderCard = (data) => (
     <View className="bg-gray100 p-4 rounded-2xl my-4">
       {data.map((item, index) => (
         <View

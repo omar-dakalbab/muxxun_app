@@ -8,6 +8,7 @@ import { Route } from 'expo-router/build/Route'
 import { router } from 'expo-router'
 import CurrencyInput from '@/components/CurrencyInput'
 import CurrencyInputSec from '@/components/ui/CurrencyInputSec'
+import ChooseContainerCard from '@/components/ui/ChooseContainerCard'
 
 export class addMoney extends Component {
   render() {
@@ -21,27 +22,18 @@ export class addMoney extends Component {
           </View>
           <View className='mx-5'>
 
-            
+
             <CurrencyInput caption='you add' />
 
-            <View className="bg-gray100 p-5 rounded-xl flex items-center flex-row justify-between mb-4 w-full">
-              <View className='flex-row items-center'>
-                <Pressable>
-                  <Image source={require("@/assets/Union.png")} />
-                </Pressable>
-                <Text className='text-h5 text-black font-bold ml-3'>
-                  Payment method
-                </Text>
-              </View>
-              <Pressable
-                className="p-3 bg-white rounded-2xl w-20  items-center justify-center shadow-sm"
-                onPress={() => {
-                  router.push("/(topup)/paymentOption/")
-                }}
-              >
-                <Text className='text-footnote font-semibold'>Choose</Text>
-              </Pressable>
-            </View>
+            <ChooseContainerCard
+              icon={require("@/assets/Union.png")}
+              title='Bank transfer'
+              buttonText='Chnage'
+              onPress={() => {
+                router.push("/(topup)/paymentOption/")
+              }}
+              route='/(topup)/paymentOption/'
+            />
 
             <CurrencyInputSec />
 

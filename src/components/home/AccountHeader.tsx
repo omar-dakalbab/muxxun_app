@@ -4,30 +4,42 @@ import {
     Text,
     TouchableOpacity,
     Modal,
-    TouchableWithoutFeedback,
-    SafeAreaView,
+    Pressable,
 } from "react-native";
 import RenderIcon from "../RenderIcon";
 import RectangleIcon from "../ui/RectangleIcon";
 import { router } from "expo-router";
-type MenuItem = { icon: string; label: string; onPress: () => void };
+import CurrencyChooser from "../currencyChooser/currencyChooser";
+
+type MenuItem = { icon: React.ReactNode; label: string; onPress: () => void };
 
 export default function AccountHeader() {
 
     const [menuVisible, setMenuVisible] = useState(false);
 
     const menuItems: MenuItem[] = [
-        { icon: "exchange", label: "Exchange", onPress: () => { } },
-        { icon: "file-text", label: "Get statements", onPress: () => { } },
-        { icon: "bank", label: "Account details", onPress: () => { } },
-        { icon: "eye-off", label: "Hide", onPress: () => { } },
-        { icon: "user-plus", label: "Add new account", onPress: () => { } },
+        {
+            icon: <RenderIcon icon="banknote" size={18} />, label: "Exchange", onPress: () => {
+                router.push({
+                    pathname: "/(exchange)",
+                });
+            }
+        },
+        { icon: <RenderIcon icon="file" size={18} />, label: "Get statements", onPress: () => { } },
+        { icon: <RenderIcon icon="bank" size={18} />, label: "Account details", onPress: () => { } },
+        { icon: <RenderIcon icon="hide" size={18} />, label: "Hide", onPress: () => { } },
+        {
+            icon: <RenderIcon icon="addaccount" size={18} />, label: "Add new account", onPress: () => {
+                setCurrencyModal(true);
+            }
+        },
     ];
+
+    const [currencyModal, setCurrencyModal] = useState(false);
 
     return (
         <>
             <View className="rounded-2xl bg-gray-100">
-                {/* header row */}
                 <View className="p-6 flex-row items-center justify-between border-b border-gray-300 pb-4">
                     <RectangleIcon size={40} label="Salomon's Account">
                         <RenderIcon icon="user" size={18} />
@@ -40,8 +52,6 @@ export default function AccountHeader() {
                         <RenderIcon icon="dots" size={20} />
                     </TouchableOpacity>
                 </View>
-
-                {/* balance */}
                 <View className="p-6 pb-0">
                     <Text className="text-lg font-medium text-gray700">
                         Available Balance
@@ -51,8 +61,6 @@ export default function AccountHeader() {
                         <Text className="text-h1-bold font-bold text-black">0.00</Text>
                     </View>
                 </View>
-
-                {/* action buttons */}
                 <View className="flex-row items-center p-6 w-full">
                     <ActionButton icon="topup" label="Top Up" onPress={() => {
                         router.push({
@@ -76,39 +84,53 @@ export default function AccountHeader() {
                     />
                 </View>
             </View>
-
-            {/* bottom menu */}
             <Modal
+                animationType="fade"
+                transparent={true}
                 visible={menuVisible}
-                animationType="slide"
-                transparent
                 onRequestClose={() => setMenuVisible(false)}
             >
-                <TouchableWithoutFeedback onPress={() => setMenuVisible(false)}>
-                    <View className="flex-1 bg-black/30" />
-                </TouchableWithoutFeedback>
+                <Pressable
+                    onPress={() => setMenuVisible(false)}
+                    className="flex-1 justify-end items-center"
+                    style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    }}>
+                    <View className="bg-white rounded-3xl p-6 w-full">
+                        {menuItems.map((item, i) => (
+                            <TouchableOpacity
+                                key={i}
+                                className="flex-row items-center py-2"
+                                activeOpacity={0.7}
+                                onPress={() => {
+                                    setMenuVisible(false);
+                                    item.onPress();
+                                }}
+                            >
+                                <View className="w-12 h-12 items-center justify-center bg-gray100 rounded-full">
+                                    {item.icon}
+                                </View>
+                                <Text className="ml-4 text-base text-gray-800">{item.label}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </Pressable>
+            </Modal>
 
-                <SafeAreaView className="bg-white rounded-t-2xl p-4">
-                    {menuItems.map((item, i) => (
-                        <TouchableOpacity
-                            key={i}
-                            className="flex-row items-center py-3"
-                            activeOpacity={0.7}
-                            onPress={() => {
-                                setMenuVisible(false);
-                                item.onPress();
-                            }}
-                        >
-                            <RenderIcon icon={item.icon} size={20} />
-                            <Text className="ml-4 text-base text-gray-800">{item.label}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </SafeAreaView>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={currencyModal}
+                onRequestClose={() => setCurrencyModal(false)}
+            >
+                <CurrencyChooser
+                    // goTo="/(transactions)/searchUser"
+                    onClose={() => setCurrencyModal(false)}
+                />
             </Modal>
         </>
     );
 }
-
 function ActionButton({
     icon,
     label,

@@ -10,6 +10,10 @@ const iconMap: Record<string, any> = {
   transfer: require("@/assets/icons/transfer.png"),
   topup: require("@/assets/icons/topup.png"),
   exchange: require("@/assets/icons/exchange.png"),
+  addaccount: require("@/assets/icons/addaccount.png"),
+  file: require("@/assets/icons/file.png"),
+  hide: require("@/assets/icons/hide.png"),
+  banknote: require("@/assets/icons/banknote.png"),
 };
 
 interface RenderIconProps {
@@ -31,7 +35,6 @@ export default function RenderIcon({ icon, style, size = 24 }: RenderIconProps) 
       <Image source={imageSource} style={{
         width: size,
         height: size,
-        // tintColor: "black",
       }} resizeMode="contain" />
     </View>
   );

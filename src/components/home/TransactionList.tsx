@@ -1,7 +1,5 @@
 import React from "react";
 import { View, Text, FlatList, Image } from "react-native";
-import { useAccountDataStore } from "@/store/useAccountDataStore";
-import TransferChart from "./TransferChart";
 
 interface Transaction {
     id: string;
@@ -9,13 +7,12 @@ interface Transaction {
     subtitle?: string;
     amount: string;
     date: string;
-    avatar?: string;
+    avatar?: any;
     currency?: string;
     positive?: boolean;
 }
 
 export default function TransactionsList() {
-    // replace with actual store selector
     const transactions: Transaction[] = [
         {
             id: "1",
@@ -23,7 +20,7 @@ export default function TransactionsList() {
             subtitle: "From John Doe",
             amount: "50",
             date: "2023-10-01",
-            avatar: "https://gravatar.com/avatar/f7b2ab039fb34e9256e8e2be4a25733b?s=400&d=robohash&r=x",
+            avatar: require("@/assets/maria.png"),
             currency: "$",
             positive: true,
         },
@@ -33,7 +30,7 @@ export default function TransactionsList() {
             subtitle: "To Jane Smith",
             amount: "20",
             date: "2023-10-02",
-            avatar: "https://gravatar.com/avatar/f7b2ab039fb34e9256e8e2be4a25733b?s=400&d=robohash&r=x",
+            avatar: require("@/assets/michelle.png"),
             currency: "$",
             positive: false,
         },
@@ -43,7 +40,7 @@ export default function TransactionsList() {
             subtitle: "For Order #12345",
             amount: "15",
             date: "2023-10-03",
-            avatar: "https://gravatar.com/avatar/f7b2ab039fb34e9256e8e2be4a25733b?s=400&d=robohash&r=x",
+            avatar: require("@/assets/maria.png"),
             currency: "€",
             positive: true,
         },
@@ -53,7 +50,7 @@ export default function TransactionsList() {
             subtitle: "Monthly Subscription",
             amount: "10",
             date: "2023-10-04",
-            avatar: "https://gravatar.com/avatar/f7b2ab039fb34e9256e8e2be4a25733b?s=400&d=robohash&r=x",
+            avatar: require("@/assets/michelle.png"),
             currency: "£",
             positive: false,
         },
@@ -63,7 +60,7 @@ export default function TransactionsList() {
             subtitle: "Monthly Salary",
             amount: "2000",
             date: "2023-10-05",
-            avatar: "https://gravatar.com/avatar/f7b2ab039fb34e9256e8e2be4a25733b?s=400&d=robohash&r=x",
+            avatar: require("@/assets/maria.png"),
             currency: "$",
             positive: true,
         },
@@ -73,7 +70,7 @@ export default function TransactionsList() {
         <View className="flex-row items-center py-3">
             {item.avatar ? (
                 <Image
-                    source={{ uri: item.avatar }}
+                    source={item.avatar}
                     className="w-10 h-10 rounded-full mr-3"
                 />
             ) : (
@@ -106,7 +103,7 @@ export default function TransactionsList() {
                     Plus
                 </Text>
             </View>
-            <View className="px-2">
+            <View>
                 <FlatList
                     data={transactions}
                     keyExtractor={(item) => item.id}

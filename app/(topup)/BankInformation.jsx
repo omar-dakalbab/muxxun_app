@@ -12,13 +12,12 @@ const applicantData = [
   { label: "Sort code", value: "3252 32 12" },
   { label: "Accout number", value: "832498713948" },
   { label: "BIC", value: "ISSUED IN UNITED KINGDOM" },
-
 ];
 
 
 export default function BankInformation() {
 
-  
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -46,7 +45,7 @@ export default function BankInformation() {
 
 
 
-  const renderCard = (data: typeof applicantData) => (
+  const renderCard = (data) => (
     <View className="bg-gray100 p-4 rounded-2xl my-4">
       {data.map((item, index) => (
         <View
@@ -94,9 +93,6 @@ export default function BankInformation() {
             </Pressable>
           </View>
           {renderCard(applicantData)}
-
-
-
         </ScrollView>
 
         {/* Footer Button */}

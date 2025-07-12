@@ -1,21 +1,21 @@
 import { Image, Pressable, Text, View } from 'react-native'
 import React, { Component } from 'react'
-import Reviews from 'app/(account)/Personal/Reviews'
-import AccountCard from '@/components/ui/AccountCard'
 import HeaderNavigation from '@/components/HeaderNavigations'
 import ToggleInput from '@/components/ToggleInput'
-import { X } from 'lucide-react-native'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 
 
 export class transcationInfo extends Component {
     render() {
+        const { isTransaction } = useLocalSearchParams();
         return (
             <View className='h-full bg-white'>
-                <HeaderNavigation title='To Martin Franci' rightIcon={<Image source={require("@/assets/Questio Circle.png")} />}
+                <HeaderNavigation
+                    onLeftIconPress={() => { isTransaction ? router.push("/(app)") : router.back() }}
+                    title='To Martin Franci'
+                    rightIcon={<Image source={require("@/assets/Questio Circle.png")} />}
                     onRightIconPress={() => { router.push("(transactions)/Help") }}
                 />
-
                 <View className='flex-row justify-between mx-6 items-center mt-6'>
                     <View className='flex'>
                         <Text className='text-h1 font-bold'>-$250</Text>
@@ -25,7 +25,6 @@ export class transcationInfo extends Component {
                         <Image className='h-12 w-12 object-cover rounded-full' source={require("@/assets/photo.png")} />
                     </View>
                 </View>
-
                 <View className='bg-gray100 p-6 rounded-2xl mx-4 mt-7'>
                     <View className='flex-row justify-between mb-8'>
                         <Text className='text-gray700'>Status</Text>
@@ -40,14 +39,12 @@ export class transcationInfo extends Component {
                         <Text className='text-h5 font-bold'>** 4405</Text>
                     </View>
                 </View>
-
                 <View className='bg-gray100 p-6 rounded-2xl mx-4 mt-4'>
                     <View className='flex-row justify-between '>
                         <Text className='text-gray700'>Note</Text>
                         <Pressable><Text className='text-h5 font-bold text-primary'>Add</Text></Pressable>
                     </View>
                 </View>
-
                 <View className='flex-row p-5 mt-4 border-gray100 border mx-4 rounded-xl'>
                     <Pressable>
                         <View className='mr-2'>
@@ -59,11 +56,6 @@ export class transcationInfo extends Component {
                         </View>
                     </Pressable>
                 </View>
-
-
-
-
-
                 <View className='bg-gray100 p-6 rounded-2xl mx-4 mt-5'>
                     <View className='flex-row justify-between mb-8'>
                         <Text className='text-gray700'>Money received</Text>

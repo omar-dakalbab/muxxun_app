@@ -5,13 +5,10 @@ import { Calendar } from 'lucide-react-native';
 import { Button } from '../ui/Button';
 import CurrencyConvertInput from './CurrencyConvertInput';
 
-
-
 const { width } = Dimensions.get('window');
-const chartWidth = width - 64; // subtract outer margin (16*2) and inner padding (16*2)
+const chartWidth = width - 64;
 const chartHeight = 200;
 
-// Create smooth cubic bezier path
 function createSmoothPath(points: number[], w: number, h: number) {
     const len = points.length;
     const stepX = w / (len - 1);
@@ -42,42 +39,28 @@ export default function TransferSimulator() {
 
     return (
         <View className="m-4 bg-gray-100 rounded-2xl p-4">
-            {/* Header */}
             <View className="flex-row items-center justify-between mb-2">
                 <Text className="text-lg font-semibold text-gray-900">Simulateur de transfert</Text>
                 <TouchableOpacity className="p-2 bg-white rounded-xl shadow-sm">
                     <Calendar size={20} color="#374151" />
                 </TouchableOpacity>
             </View>
-
-            {/* Chart Area */}
             <View className="relative" style={{ width: chartWidth, height: chartHeight + 20 }}>
-                {/* SVG Chart */}
-                <Svg width={chartWidth} height={chartHeight}>
+                <Svg width={chartWidth} height={chartHeight} >
                     <Defs>
                         <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
                             <Stop offset="0%" stopColor="#A78BFA" stopOpacity={0.4} />
                             <Stop offset="100%" stopColor="#FFFFFF" stopOpacity={0} />
                         </LinearGradient>
                     </Defs>
-                    {/* Grid Lines */}
                     <Line x1={0} y1={0} x2={0} y2={chartHeight} stroke="#D1D5DB" strokeWidth={1} />
                     <Line x1={0} y1={chartHeight} x2={chartWidth} y2={chartHeight} stroke="#D1D5DB" strokeWidth={1} />
                     <Line x1={augX} y1={0} x2={augX} y2={chartHeight} stroke="#E5E7EB" strokeWidth={1} />
-
-                    {/* Filled Area */}
                     <Path d={`${d} L ${chartWidth},${chartHeight} L 0,${chartHeight} Z`} fill="url(#grad)" />
-                    {/* Curve Stroke */}
                     <Path d={d} fill="none" stroke="#8B5CF6" strokeWidth={2} />
-
-                    {/* Vertical Indicator */}
                     <Line x1={selectedX} y1={0} x2={selectedX} y2={chartHeight} stroke="#8B5CF6" strokeWidth={1} />
-
-                    {/* Data Point Marker */}
                     <Circle cx={selectedX} cy={selectedY} r={6} fill="#FFFFFF" stroke="#8B5CF6" strokeWidth={2} />
                 </Svg>
-
-                {/* Tooltip */}
                 <View
                     className="absolute bg-purple-600 px-3 py-1 rounded-full"
                     style={{ left: selectedX - 40, top: selectedY - 44 }}
@@ -85,8 +68,6 @@ export default function TransferSimulator() {
                     <Text className="text-white text-sm">↑ ${raw[selectedIndex].toLocaleString()}</Text>
                 </View>
             </View>
-
-            {/* X-axis labels */}
             <View className="flex-row justify-between mt-2 px-1">
                 {labels.map((label, i) => (
                     <Text key={i} className="text-xs text-gray-600">
@@ -94,9 +75,7 @@ export default function TransferSimulator() {
                     </Text>
                 ))}
             </View>
-
-            {/* Y-axis labels */}
-            <View className="absolute top-[40px] left-0">
+            {/* <View className="absolute top-[40px] left-0">
                 {[0, max / 2, max].map((val, i) => (
                     <Text
                         key={i}
@@ -106,20 +85,15 @@ export default function TransferSimulator() {
                         ${i === 0 ? 0 : i === 1 ? (max / 2).toLocaleString() : max.toLocaleString()}
                     </Text>
                 ))}
-            </View>
-
-
+            </View> */}
             <View className='mt-8'>
                 <CurrencyConvertInput />
             </View>
-
             <View className='mt-4'>
                 <Button>
                     <Text className="text-white font-semibold">Envoyer</Text>
                 </Button>
             </View>
-
-
         </View>
     );
 }

@@ -7,6 +7,7 @@ export default function currencyChooser() {
         <SafeAreaView className="flex-1 bg-white">
             <CurrencyChooser
                 goTo='/(transactions)/searchUser'
+                onClose={() => { }}
             />
         </SafeAreaView>
     )
