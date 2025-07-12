@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, ReactNode } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 
@@ -12,7 +12,7 @@ const PageLayout = ({
   keyboardVerticalOffset = 30,
 }: {
   title?: string;
-  description?: string;
+  description?: ReactNode;
   keyboardVerticalOffset?: number;
   children?: React.ReactNode;
   footer?: React.ReactNode;
@@ -37,9 +37,7 @@ const PageLayout = ({
                 </View>
               )}
 
-              <View className="flex-1" style={styles.childrenContainer}>
-                {children}
-              </View>
+              <View className="flex-1">{children}</View>
             </View>
 
             {footer && (
@@ -85,9 +83,9 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     color: "#606060",
   },
-  childrenContainer: {
-    marginTop: 10,
-  },
+  // childrenContainer: {
+  //   marginTop: 10,
+  // },
   title: {
     fontSize: 28,
     fontWeight: "700",

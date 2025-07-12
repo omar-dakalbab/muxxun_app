@@ -3,7 +3,9 @@ module.exports = {
   content: [
     "./App.tsx",
     "./src/components/**/*.{js,jsx,ts,tsx}",
-    "./src/screens/**/*.{js,jsx,ts,tsx}"
+    "./src/screens/**/*.{js,jsx,ts,tsx}",
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./app/components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -37,6 +39,7 @@ module.exports = {
         gray200: "#ECECEC",
         gray100: "#F5F5F5",
         transparent: "transparent",
+        skeleton: "#D9D9D9"
       },
       fontSize: {
         display: ['34px', '41px'],

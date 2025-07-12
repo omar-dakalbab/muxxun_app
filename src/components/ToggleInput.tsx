@@ -40,7 +40,7 @@ export default function ToggleInput({
       <Switch
         value={isToggled}
         onValueChange={handleToggle}
-        trackColor={{ false: "#ccc", true: "#2563eb" }} // Gray / Blue
+        trackColor={{ false: "#ccc", true: "#2563eb" }}
         thumbColor={isToggled ? "#fff" : "#fff"}
       />
     </View>

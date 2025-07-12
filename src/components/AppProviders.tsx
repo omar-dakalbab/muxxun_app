@@ -5,11 +5,11 @@ import { PortalProvider } from "@gorhom/portal";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export const AppProviders = ({ children }: { children: React.ReactNode }) => (
-  <BottomSheetModalProvider>
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <PortalProvider>{children}</PortalProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
-  </BottomSheetModalProvider>
+  <GestureHandlerRootView>
+    <SafeAreaProvider>
+      <PortalProvider>
+        <BottomSheetModalProvider>{children}</BottomSheetModalProvider>
+      </PortalProvider>
+    </SafeAreaProvider>
+  </GestureHandlerRootView>
 );

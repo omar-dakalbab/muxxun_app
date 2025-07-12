@@ -22,7 +22,7 @@ type VerificationCodeInputProps = {
 };
 
 const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
-  code,
+  code = "",
   onChange,
   disableKeyboard,
 }) => {
@@ -33,7 +33,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
     const digitsOnly = text.replace(/\D/g, "").slice(0, 1);
     const newCode = code.slice(0, index) + digitsOnly + code.slice(index + 1);
     if (newCode.length === BOX_COUNT) {
-      console.log("Code entered:", newCode);
+   
       setActiveCode(true);
     }
     onChange(newCode);
