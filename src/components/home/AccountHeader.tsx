@@ -7,14 +7,15 @@ import {
     Pressable,
 } from "react-native";
 import RenderIcon from "../RenderIcon";
-import RectangleIcon from "../ui/RectangleIcon";
 import { router } from "expo-router";
 import CurrencyChooser from "../currencyChooser/currencyChooser";
 
 type MenuItem = { icon: React.ReactNode; label: string; onPress: () => void };
 
-export default function AccountHeader() {
-
+export default function AccountHeader({
+    cardTitle = "British Pound",
+    cardIcon = "🇬🇧",
+}) {
     const [menuVisible, setMenuVisible] = useState(false);
 
     const menuItems: MenuItem[] = [
@@ -41,9 +42,14 @@ export default function AccountHeader() {
         <>
             <View className="rounded-2xl bg-gray-100">
                 <View className="p-6 flex-row items-center justify-between border-b border-gray-300 pb-4">
-                    <RectangleIcon size={40} label="Salomon's Account">
-                        <RenderIcon icon="user" size={18} />
-                    </RectangleIcon>
+                    <View className="flex-row items-center space-x-2">
+                        <Text
+                            className="text-4xl font-bold text-gray-800"
+                        >{cardIcon}</Text>
+                        <Text className="text-lg font-medium text-black">
+                            {cardTitle}
+                        </Text>
+                    </View>
                     <TouchableOpacity
                         activeOpacity={0.7}
                         className="w-10 h-10 items-center justify-center"
@@ -124,7 +130,6 @@ export default function AccountHeader() {
                 onRequestClose={() => setCurrencyModal(false)}
             >
                 <CurrencyChooser
-                    // goTo="/(transactions)/searchUser"
                     onClose={() => setCurrencyModal(false)}
                 />
             </Modal>

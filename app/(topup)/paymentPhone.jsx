@@ -8,9 +8,8 @@ import {
 import React, { Component } from 'react'
 import HeaderNavigation from '@/components/HeaderNavigations'
 import { Button } from '@/components/ui/Button'
-import SelectModal from '@/components/ui/SelectModal'
-import Input from '@/components/ui/Input'
 import { router } from 'expo-router'
+import Input from '@/components/ui/input'
 
 export class paymentPhone extends Component {
     render() {
@@ -34,7 +33,7 @@ export class paymentPhone extends Component {
                     <View className='pb-6 mx-3'>
 
                         <Button label='continue' onPress={() => {
-                            router.push({ pathname: "/(topup)/paymentPhone/" });
+                            router.push({ pathname: "/(app)" });
                         }} />
                     </View>
 

@@ -6,6 +6,7 @@ import DotsIndicator from "./DotsIndicator";
 import TransactionsList from "./TransactionList";
 import TransferChart from "./TransferChart";
 import Widgets from "./Widgets";
+import TotalBalance from "./TotalBalance";
 
 export default function MainHome({ loading }: { loading?: boolean }) {
     const { width } = useWindowDimensions();
@@ -21,6 +22,7 @@ export default function MainHome({ loading }: { loading?: boolean }) {
             </View>
         );
     }
+
     return (
         <Animated.ScrollView className="flex-1 bg-white"
             scrollEventThrottle={16}
@@ -28,6 +30,7 @@ export default function MainHome({ loading }: { loading?: boolean }) {
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                 { useNativeDriver: true }
             )}>
+            <TotalBalance />
             <View style={{ height: 300 }}>
                 <FlatList
                     ref={flatListRef}
@@ -48,7 +51,7 @@ export default function MainHome({ loading }: { loading?: boolean }) {
             </View>
             <TransactionsList />
             <TransferChart />
-            <Widgets scrollY={scrollY} />
+            <Widgets scrollY={scrollY} />c
         </Animated.ScrollView>
     );
 }
