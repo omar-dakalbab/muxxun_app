@@ -1,0 +1,51 @@
+import React from "react";
+import { View, Text, Image, Pressable } from "react-native";
+
+const AccountCard = ({
+  icon,
+  title,
+  description,
+  onClick,
+  isCardActive = false,
+}: {
+  icon: any;
+  title: string;
+  description?: string;
+  onClick: () => void;
+  isCardActive?: boolean;
+}) => (
+  <View
+    className="flex-row items-center bg-gray100 mt-2 p-6 rounded-2xl"
+    style={{
+      borderWidth: isCardActive ? 1 : 0,
+      borderColor: isCardActive ? "#22C55E" : "transparent",
+    }}
+  >
+    <Image className="h-5 w-5 mr-3" source={icon} />
+
+    <View
+      className="flex-1 mr-3"
+      style={{
+        justifyContent: description ? "flex-start" : "center", // 👈 Center vertically if no description
+      }}
+    >
+      <Text className="text-h5 font-inter-bold font-semibold">
+        {title}
+      </Text>
+      {description ? (
+        <Text className="text-footnote text-gray700 leading-[20px]">
+          {description}
+        </Text>
+      ) : null}
+    </View>
+
+    <Pressable
+      onPress={onClick}
+      className="h-10 w-10 bg-white rounded-lg items-center justify-center shadow-sm"
+    >
+      <Image source={require("@/assets/arrow.png")} />
+    </Pressable>
+  </View>
+);
+
+export default AccountCard;
