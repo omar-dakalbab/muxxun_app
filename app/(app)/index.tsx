@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Header title="SmartHome" initials="JD" />
+      <Header  title="SmartHome" initials="JD" />
       {userConditions?.isCompletedKYC ?
         <MainHome loading={loading} /> : <CompleteKyc loading={loading} />
       }

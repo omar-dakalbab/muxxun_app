@@ -19,6 +19,8 @@ export default function SelectModal({
   placeholder = "Select an option",
   subTitle = "",
   value,
+  compactLabel = "",
+  compact = false,
   onChange,
 }: {
   title?: string;
@@ -26,6 +28,8 @@ export default function SelectModal({
   placeholder?: string;
   subTitle?: string;
   value?: string;
+  compact?: boolean;
+  compactLabel?: string;
   onChange?: (value: any) => void;
 }) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -55,16 +59,23 @@ export default function SelectModal({
 
   return (
     <>
-      <View className="bg-gray100 p-5 rounded-xl flex items-center flex-row justify-between mb-4 w-full">
-        <View className="gap-1 w-4/5">
-          {subTitle && <Text className="text-gray700">{subTitle}</Text>}
+      <View className="bg-gray100 p-5 rounded-xl flex flex-row items-center justify-between mb-4 w-full">
+        {compact ? (
           <Text className="text-h5 text-black font-semibold">
-            {selectedOption || placeholder}
+            {selectedOption || compactLabel || placeholder}
           </Text>
-        </View>
+        ) : (
+          <View className="gap-1 w-4/5">
+            {subTitle && <Text className="text-gray700">{subTitle}</Text>}
+            <Text className="text-h5 text-black font-semibold">
+              {selectedOption || placeholder}
+            </Text>
+          </View>
+        )}
+
         <Pressable
           onPress={openSheet}
-          className="h-10 w-10 bg-white rounded-lg items-center justify-center shadow-sm"
+          className={`${compact ? "h-8 w-8" : "h-10 w-10"} bg-white rounded-lg items-center justify-center shadow-sm`}
         >
           <Image
             source={require("@/assets/arrow.png")}

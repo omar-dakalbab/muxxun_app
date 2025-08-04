@@ -16,7 +16,7 @@ const TABS: {
   route: string;
 }[] = [
     { icon: Home, label: "Home", route: "(app)" },
-    { icon: CreditCard, label: "Cards", route: "cards" },
+    { icon: CreditCard, label: "Cards", route: "(cards)" },
     { icon: ArrowLeftRight, label: "Exchange", route: "(exchange)" },
     { icon: HandCoins, label: "Payments", route: "(transactions)" },
     { icon: User, label: "Recipients", route: "recipients" },

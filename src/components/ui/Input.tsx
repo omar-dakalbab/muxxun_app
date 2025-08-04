@@ -9,7 +9,6 @@ import {
   Easing,
   Keyboard,
   Platform,
-  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
@@ -19,15 +18,19 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 type InputProps = {
   label: string;
   value: string;
+  placeholder?: string;
   onChangeText: (text: string) => void;
   onClear?: () => void;
   hasClear?: boolean;
+  centerText?: boolean;
   secureTextEntry?: boolean;
   keyboardType?: TextInputProps["keyboardType"];
   editable?: boolean;
   error?: string;
   type: "text" | "email" | "phone" | "password" | "select" | "date";
   options?: { label: string; value: string }[]; // for select
+  limitedCancel?: boolean; // NEW: enable counter + X
+  maxLength?: number; // NEW: optional max length
 };
 
 const countryCodes = [
@@ -42,14 +45,17 @@ const Input: React.FC<InputProps> = ({
   value,
   onChangeText,
   onClear,
+  placeholder,
   hasClear = true,
   secureTextEntry = false,
   keyboardType = "default",
   editable = true,
   error,
   type = "text",
+  limitedCancel = false,
+  maxLength = 20,
+  centerText = false,
 }) => {
-  // const inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -90,46 +96,25 @@ const Input: React.FC<InputProps> = ({
   const containerStyle = {
     borderWidth: 2,
     borderRadius: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: centerText ? 12 : 8,
+    paddingBottom: centerText ? 12 : 8,
     paddingHorizontal: 16,
     backgroundColor: isFocused ? "#fff" : "#F5F5F5",
     borderColor: isFocused ? "#000" : "#F5F5F5",
   };
 
+  const inputRef = useRef<TextInput>(null);
   const pickerRef = useRef<RNPickerSelect>(null);
 
-  const inputRef = useRef<TextInput>(null);
-  const [isKeyboardOpened, setIsKeyboardOpened] = useState(false);
-
-  useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", () =>
-      setIsKeyboardOpened(true)
-    );
-    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
-      setIsKeyboardOpened(false)
-    );
-
-    return () => {
-      showSub.remove();
-      hideSub.remove();
-    };
-  }, []);
   return (
-    <Pressable
-      onPress={() => {
-        if (isKeyboardOpened) {
-          Keyboard.dismiss();
-        } else {
-          inputRef.current?.focus();
-        }
-      }}
-    >
-      <View className="mb-5">
+    <Pressable onPress={() => inputRef.current?.focus()}>
+      <View className="mb-4">
         <Animated.View style={containerStyle}>
-          <Animated.Text style={labelStyle}>{label}</Animated.Text>
+          {!centerText && (
+            <Animated.Text style={labelStyle}>{label}</Animated.Text>
+          )}
 
-          <View className="flex-row items-center mt-1 pt-7">
+          <View className={`flex-row ${centerText ? "items-center py-3" : "items-start pt-7 pb-2 mt-1"}`}>
             {type === "phone" && (
               <View
                 style={{
@@ -141,11 +126,7 @@ const Input: React.FC<InputProps> = ({
               >
                 <Pressable
                   onPress={() => pickerRef.current?.togglePicker?.()}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    flex: 1,
-                  }}
+                  style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
                 >
                   <RNPickerSelect
                     ref={pickerRef}
@@ -197,33 +178,36 @@ const Input: React.FC<InputProps> = ({
               </>
             ) : (
               <TextInput
-                className="flex-1 text-black dark:text-white text-[18px]"
+                ref={inputRef}
+                className={`flex-1 text-black text-[18px] `}
                 value={value}
-                onChangeText={onChangeText}
+                onChangeText={(text) => {
+                  if (limitedCancel && text.length > maxLength) return;
+                  onChangeText(text);
+                }}
                 secureTextEntry={secureTextEntry}
                 keyboardType={keyboardType}
                 editable={editable}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
+                placeholder={shouldFloatLabel ? undefined : placeholder}
                 placeholderTextColor="#aaa"
-                ref={inputRef}
               />
             )}
 
-            {hasClear &&
-              value.length > 0 &&
-              onClear &&
-              type !== "select" &&
-              type !== "date" && (
+            {limitedCancel && value.length > 0 && (
+              <View className="justify-start items-end ml-2 -mt-5">
+                <Text className="text-xs text-gray-500">{`${value.length}/${maxLength}`}</Text>
                 <Pressable
                   onPress={onClear}
                   hitSlop={10}
                   android_ripple={{ color: "#e5e7eb", borderless: true }}
-                  className="ml-2"
+                  className="mt-1"
                 >
                   <Ionicons name="close-circle" size={20} color="#A1A1A1" />
                 </Pressable>
-              )}
+              </View>
+            )}
           </View>
         </Animated.View>
 
